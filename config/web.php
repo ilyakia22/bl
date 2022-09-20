@@ -5,6 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
+    'name' => 'Чернолист',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -42,14 +43,18 @@ $config = [
             ],
         ],
         'db' => $db,
-        
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '/' => 'site/index',
+                [
+                    'class' => '\app\lib\Wp',
+                ],
             ],
         ],
-        
+
     ],
     'params' => $params,
 ];
