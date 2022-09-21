@@ -11,11 +11,13 @@
 
 namespace app\controllers;
 
+use app\models\CommentPhone;
 use Yii;
 use FrontEndCotroller;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Forum;
+use yii\data\Pagination;
 
 
 /**
@@ -48,20 +50,26 @@ class SiteController extends FrontEndController
         // $meta = Meta::find('url LIKE \'index\'');
         // $this->view->title = '111';
 
+        $forums = Forum::find()->where('tpl_id=0 AND status=:status', ['status' => Forum::STATUS_APPROVED])->orderBy('datetime_create DESC')->limit(10)->all();
+
+        // $criteria = new CDbCriteria;
+        // $criteria->limit = '30';
+        // $criteria->order = 'datetime DESC';
+        // $commentPhones = CommentPhone::model()->findAll($criteria);
+
+        // $amountComment = CommentPhone::model()->count('status=:status', ['status' => CommentPhone::STATUS_OK]);
+        // $amountPages = ceil($amountComment / 60);
+        $query = CommentPhone::find()->where(['status' => CommentPhone::STATUS_OK]);
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 60, 'route' => 'phone/index']);
+        $commentPhones = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
         $this->metaUrl = 'index';
         $this->canonical = '/';
 
-
-        // $criteria = new CDbCriteria;
-        // $criteria->condition = 'tpl_id=0 AND type=:type';
-        // $criteria->params = array('type' => Forum::TYPE_FORUM);
-        // $criteria->addInCondition('status', Forum::$statusAvailable);
-        // $criteria->order = 'datetime_create DESC';
-        // $criteria->limit = 10;
-        // $forums = Forum::model()->findAll($criteria);
-        $forums = Forum::find()->where('tpl_id=0 AND status=:status', ['status' => Forum::STATUS_APPROVED])->orderBy('datetime_create DESC')->limit(10)->all();
-
-        return $this->render('index', ['forums' => $forums]);
+        return $this->render('index', ['forums' => $forums, 'pages' => $pages, 'commentPhones' => $commentPhones]);
     }
 
     /**

@@ -14,6 +14,15 @@ class Wp implements UrlRuleInterface
 			if (isset($params['id']) && isset($params['title'])) {
 				return '/' . \app\lib\CommonLib::str2url($params['title']) . '-' . $params['id'];
 			}
+		} else if ($route === 'forum/tag') {
+			if (isset($params['regionLink']) && isset($params['tagLink'])) {
+				return '/' . $params['regionLink'] . '/' . $params['tagLink'];
+			}
+		}
+		if ($route === 'phone/index') {
+			if (isset($params['number'])) {
+				return '/' . $params['number'];
+			}
 		}
 		return false;
 	}

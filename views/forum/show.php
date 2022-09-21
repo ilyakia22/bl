@@ -1,5 +1,16 @@
 <?
-//$this->breadcrumbs[] = array('value' => $nameObj, 'link' => $linkRegionObj);
+if ($forum->city != null) {
+    $regionLink = $forum->city->link;
+    $regionName = $forum->city->name;
+} else if ($forum->region != null) {
+    $regionLink = $forum->city->link;
+    $regionName = $forum->city->name;
+} else if ($forum->country != null) {
+    $regionLink = $forum->country->link;
+    $regionName = $forum->country->name;
+}
+
+$this->params['breadcrumbs'][] = array('label' => $regionName, 'url' => '/' . $regionLink);
 $this->params['breadcrumbs'][] = array('label' => $forum->title);
 ?><article class="post">
     <div class="post__usr">
@@ -18,8 +29,9 @@ $this->params['breadcrumbs'][] = array('label' => $forum->title);
     <section class="post__text">
         <?= str_replace('<img', '<img alt="' . htmlspecialchars($forum->title) . '"', $forum->getFormattedText()) ?>
     </section>
-    <? if (0) : ?>
-        <div class="post__tags">
+
+    <div class="post__tags">
+        <? if (0) : ?>
             <? if ($forum->city != null) : ?>
                 <mark class="tag"><a href="<?= getUrlForum($regionLink) ?>"><b><?= $forum->city->name ?></b></a></mark>
             <? elseif ($forum->region != null) : ?>
@@ -27,11 +39,12 @@ $this->params['breadcrumbs'][] = array('label' => $forum->title);
             <? elseif ($forum->country != null) : ?>
                 <mark class="tag"><a href="<?= getUrlForum($regionLink) ?>"><b><?= $forum->country->name ?></b></a></mark>
             <? endif; ?>
-            <? if ($forum->tags != null && count($forum->tags) > 0) : ?>
-                <? foreach ($forum->tags as $tag) : ?>
-                    <mark class="tag"><a href="<?= getTagUrl($tag->getLink(), $regionLink) ?>">#<?= $tag->value ?></a></mark>
-                <? endforeach; ?>
-        </div>
-    <? endif; ?>
+        <? endif; ?>
+        <? if ($forum->tags != null && count($forum->tags) > 0) : ?>
+            <? foreach ($forum->tags as $tag) : ?>
+                <mark class="tag"><a href="<?= $tag->getLink($regionLink) ?>">#<?= $tag->value ?></a></mark>
+            <? endforeach; ?>
+    </div>
+
 <? endif; ?>
 </article>

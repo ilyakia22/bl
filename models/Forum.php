@@ -119,15 +119,15 @@ class Forum extends \yii\db\ActiveRecord
     }
     public function getCity()
     {
-        return $this->hasOne(\app\model\City::class, ['id' => 'city_id']);
+        return $this->hasOne(\app\models\City::class, ['id' => 'city_id']);
     }
     public function getRegion()
     {
-        return $this->hasOne(\app\model\Region::class, ['id' => 'region_id']);
+        return $this->hasOne(\app\models\Region::class, ['id' => 'region_id']);
     }
     public function getCountry()
     {
-        return $this->hasOne(\app\model\Country::class, ['id' => 'country_id']);
+        return $this->hasOne(\app\models\Country::class, ['id' => 'country_id']);
     }
     public function getTags()
     {

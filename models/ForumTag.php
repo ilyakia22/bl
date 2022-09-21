@@ -46,4 +46,9 @@ class ForumTag extends \yii\db\ActiveRecord
             'link' => 'Link',
         ];
     }
+
+    public function getLink($regionLink)
+    {
+        return Yii::$app->urlManager->createUrl(['forum/tag', 'regionLink' => $regionLink, 'tagLink' => $this->link]);
+    }
 }
