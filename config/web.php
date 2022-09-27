@@ -33,6 +33,13 @@ $config = [
             // send all mails to a file by default.
             'useFileTransport' => true,
         ],
+        'assetManager' => [
+            'bundles' => [
+                'yii\web\JqueryAsset' => false,
+                'yii\bootstrap\BootstrapPluginAsset' => false,
+                'yii\bootstrap\BootstrapAsset' => false,
+            ],
+        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -49,6 +56,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 '/' => 'site/index',
+                'phone' => 'phone/index',
                 [
                     'class' => '\app\lib\Wp',
                 ],

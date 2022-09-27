@@ -1,0 +1,328 @@
+body {
+	background: white;
+}
+a {
+	cursor: pointer;
+}
+a:hover {
+	text-decoration: none;
+}
+.container.main {
+	margin: 0 auto;
+	max-width: 800px;
+}
+.breadcrumb {
+	padding: 8px 15px;
+	margin-bottom: 20px;
+	list-style: none;
+	background-color: #f5f5f5;
+	border-radius: 4px;
+}
+.breadcrumb > li {
+	display: inline-block;
+}
+.breadcrumb > li + li:before {
+	padding: 0 5px;
+	color: #ccc;
+	content: "/\00a0";
+}
+.breadcrumb > .active {
+	color: #777;
+}
+.card.success {
+	--card-back-color: #689f38;
+	--card-fore-color: #f8f8f8;
+	--card-border-color: #208025;
+}
+.button > .spinner {
+	margin-right: 0.5rem;
+	display: none;
+}
+.button:disabled > .spinner {
+	display: inline-block;
+}
+.button > span {
+	vertical-align: top;
+}
+.toast.error {
+	background: #b71c1c;
+}
+.toast.error a {
+	color: white;
+	text-decoration: underline;
+}
+.toast.warning {
+	background: #ffca28;
+	color: #111;
+}
+.toast.success {
+	background: #689f38;
+}
+
+label.error {
+	color: var(--input-invalid-color);
+}
+input.error,
+textarea.error {
+	border-color: var(--input-invalid-color) !important;
+}
+.usr__avatar {
+	width: 4rem;
+	height: 4rem;
+	border-radius: 50%;
+	min-width: 4rem;
+}
+.usr__avatar-child {
+	width: 3rem;
+	height: 3rem;
+	border-radius: 50%;
+	min-width: 3rem;
+}
+
+.preview {
+	margin: var(--universal-margin);
+	margin-bottom: 4rem;
+}
+.preview__usr {
+	display: flex;
+	color: grey;
+}
+.preview__usr > div {
+	flex-grow: 1;
+	padding-left: 1.5rem;
+}
+.preview h2 {
+	margin-left: 0;
+	margin-right: 0;
+}
+.preview > section figure {
+	margin: 10px auto;
+	text-align: center;
+	line-height: 0;
+	max-width: 600px;
+}
+.preview__text {
+	word-wrap: break-word;
+}
+.preview__text p {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.post {
+	word-wrap: break-word;
+}
+.post__usr {
+	display: flex;
+	color: grey;
+}
+.post__usr > div {
+	flex-grow: 1;
+	padding-left: 1.5rem;
+}
+.post > section figure {
+	margin: 10px auto;
+	text-align: center;
+	line-height: 0;
+	max-width: 600px;
+}
+.post__text {
+	word-wrap: break-word;
+}
+.post__text p {
+	margin-left: 0;
+	margin-right: 0;
+}
+.post__tags {
+	margin-top: 2em;
+}
+.post__tags mark.tag {
+	background: var(--secondary-back-color);
+	font-size: 0.75em;
+	margin-right: 1em;
+}
+.post__tags a {
+	color: #777;
+}
+
+hr.post2comment {
+	margin: 2rem 0;
+}
+/* comment new form */
+.cnf {
+	display: flex;
+	margin: var(--universal-margin);
+	margin-top: 2rem;
+	margin-bottom: 3rem;
+}
+.cnf > div {
+	flex-grow: 1;
+	margin-left: 1.5rem;
+}
+/* comment response form */
+.crf {
+	margin: 0 auto;
+}
+
+.comment {
+	display: flex;
+	margin: var(--universal-margin);
+	margin-bottom: 3rem;
+}
+.comment > div {
+	flex-grow: 1;
+	padding-left: 1.5rem;
+}
+.comment__info {
+	padding-bottom: 0.5rem;
+}
+.comment__info b {
+	font-size: 1.2rem;
+}
+.comment__info span {
+	color: grey;
+}
+.comment__info-response-name {
+	margin-right: 1rem;
+}
+.comment__info-response-name::before {
+	content: "\2192";
+}
+.comment__response {
+	display: block;
+	margin-top: 0.5rem;
+}
+.comment__response > a {
+	font-size: 0.8rem;
+	color: grey;
+	padding: 0.2rem;
+	border-radius: var(--universal-border-radius);
+	margin-left: -0.2rem;
+}
+.comment__response > a:hover {
+	background: #eee;
+}
+
+.comment__child {
+	padding-left: 5.5rem;
+}
+
+.youtube-wrapper {
+	width: 100%;
+	max-width: 600px;
+	margin: 0 auto;
+}
+.youtube {
+	background-color: #000;
+
+	position: relative;
+	padding-top: 56.25%;
+	overflow: hidden;
+	cursor: pointer;
+}
+.youtube img {
+	width: 100%;
+	top: -16.82%;
+	left: 0;
+	opacity: 0.7;
+}
+.youtube .play-button {
+	width: 90px;
+	height: 60px;
+	background-color: #333;
+	box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+	z-index: 1;
+	opacity: 0.8;
+	border-radius: 6px;
+}
+.youtube .play-button:before {
+	content: "";
+	border-style: solid;
+	border-width: 15px 0 15px 26px;
+	border-color: transparent transparent transparent #fff;
+}
+.youtube img,
+.youtube .play-button {
+	cursor: pointer;
+}
+.youtube img,
+.youtube iframe,
+.youtube .play-button,
+.youtube .play-button:before {
+	position: absolute;
+}
+.youtube .play-button,
+.youtube .play-button:before {
+	top: 50%;
+	left: 50%;
+	transform: translate3d(-50%, -50%, 0);
+}
+.youtube iframe {
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+}
+
+.who-call {
+	border: 1px solid #eee;
+	margin-bottom: 1em;
+}
+.who-call__info {
+	padding: 5px 15px 5px 15px;
+	border-bottom: 1px solid #eee;
+	background: #eee;
+}
+.who-call__info b {
+	color: #b71c1c;
+}
+.who-call__info small {
+	font-style: normal;
+	color: #777;
+}
+.who-call__comment {
+	padding: 15px;
+}
+.who-call__comment-note{
+	color: #777;
+	font-size: 14px;
+}
+
+.pager {
+	padding-left: 0;
+	margin: 20px 0;
+	text-align: center;
+	list-style: none;
+}
+.pager li {
+	display: inline;
+}
+.pager li > a,
+.pager li > span {
+	display: inline-block;
+	padding: 5px 14px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 15px;
+}
+.pager li > a:hover,
+.pager li > a:focus {
+	text-decoration: none;
+	background-color: #eeeeee;
+}
+.pager .next > a,
+.pager .next > span {
+	float: right;
+}
+.pager .previous > a,
+.pager .previous > span {
+	float: left;
+}
+.pager .disabled > a,
+.pager .disabled > a:hover,
+.pager .disabled > a:focus,
+.pager .disabled > span {
+	color: #777777;
+	cursor: not-allowed;
+	background-color: #fff;
+}

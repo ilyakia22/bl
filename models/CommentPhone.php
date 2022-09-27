@@ -112,7 +112,7 @@ class CommentPhone extends \yii\db\ActiveRecord
         if ($sub == 800) $number = '8';
         else $number = '7';
         $number .= $this->phone_number;
-        return Yii::$app->urlManager->createUrl(['phone/index', 'number' => $number]);
+        return Yii::$app->urlManager->createUrl(['phone/info', 'number' => $number]);
     }
 
     public function getDate()

@@ -77,16 +77,18 @@ class FrontEndController extends Controller
 
     private function setMeta()
     {
-        if (empty($this->metaUrl)) {
-            if (!empty($this->pageTitle)) $this->view->title = $this->pageTitle;
-            if (!empty($this->pageKeywords)) $this->view->registerMetaTag(['name' => 'keywords', 'content' => $this->pageKeywords]);
-            if (!empty($this->pageDescription)) $this->view->registerMetaTag(['name' => 'description', 'content' => $this->pageDescription]);
-        } else {
+        if (!empty($this->metaUrl)) {
             $meta = Meta::findOne(['url' => $this->metaUrl]);
             if ($meta == null) return false;
-            $this->view->title = $meta->title;
-            $this->view->title = str_replace($this->metaFrom, $this->metaTo, $this->view->title);
+            $this->pageTitle = str_replace($this->metaFrom, $this->metaTo, $meta->title);
+            $this->pageKeywords = str_replace($this->metaFrom, $this->metaTo, $meta->keyword);
+            $this->pageDescription = str_replace($this->metaFrom, $this->metaTo, $meta->description);
+            $this->h1 = str_replace($this->metaFrom, $this->metaTo, $meta->h1);
         }
+
+        if (!empty($this->pageTitle)) $this->view->title = $this->pageTitle;
+        if (!empty($this->pageKeywords)) $this->view->registerMetaTag(['name' => 'keywords', 'content' => $this->pageKeywords]);
+        if (!empty($this->pageDescription)) $this->view->registerMetaTag(['name' => 'description', 'content' => $this->pageDescription]);
         // $this->pageDescription = str_replace($from, $to, $this->pageDescription);
         // $this->pageKeywords = str_replace($from, $to, $this->pageKeywords);
         // $this->h1 = str_replace($from, $to, $this->h1);

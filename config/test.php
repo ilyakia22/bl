@@ -24,6 +24,18 @@ return [
         ],
         'assetManager' => [
             'basePath' => __DIR__ . '/../web/assets',
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'js' => []
+                ],
+                'yii\bootstrap\BootstrapPluginAsset' => [
+                    'js' => []
+                ],
+                'yii\bootstrap\BootstrapAsset' => [
+                    'css' => [],
+                ],
+
+            ],
         ],
         'urlManager' => [
             'showScriptName' => true,

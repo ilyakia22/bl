@@ -1,3 +1,7 @@
+<?
+
+use yii\helpers\Url;
+?>
 <h2>Кто звонил?</h2>
 <div class="content-white">
     <? foreach ($commentPhones as $commentPhone) : ?>
@@ -12,10 +16,11 @@
         </div>
     <? endforeach; ?>
 </div>
+<a href="<?= Url::toRoute('phone/'); ?>" class="button primary">Еще</a>
 <?
-echo \yii\widgets\LinkPager::widget([
-    'pagination' => $pages,
-]);
+// echo \yii\widgets\LinkPager::widget([
+//     'pagination' => $pages,
+// ]);
 ?>
 
 <? foreach ($forums as $k => $forum) : ?>

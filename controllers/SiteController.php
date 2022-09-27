@@ -59,17 +59,19 @@ class SiteController extends FrontEndController
 
         // $amountComment = CommentPhone::model()->count('status=:status', ['status' => CommentPhone::STATUS_OK]);
         // $amountPages = ceil($amountComment / 60);
-        $query = CommentPhone::find()->where(['status' => CommentPhone::STATUS_OK]);
-        $countQuery = clone $query;
-        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 60, 'route' => 'phone/index']);
-        $commentPhones = $query->offset($pages->offset)
-            ->limit($pages->limit)
-            ->all();
+
+        // $query = CommentPhone::find()->where(['status' => CommentPhone::STATUS_OK]);
+        // $countQuery = clone $query;
+        // $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 60, 'route' => 'phone/index']);
+        // $commentPhones = $query->offset($pages->offset)
+        //     ->limit($pages->limit)
+        //     ->all();
+        $commentPhones = CommentPhone::find()->where('status=:status', ['status' => CommentPhone::STATUS_OK])->orderBy('datetime DESC')->limit(30)->all();
 
         $this->metaUrl = 'index';
         $this->canonical = '/';
 
-        return $this->render('index', ['forums' => $forums, 'pages' => $pages, 'commentPhones' => $commentPhones]);
+        return $this->render('index', ['forums' => $forums, 'commentPhones' => $commentPhones]);
     }
 
     /**
