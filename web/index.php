@@ -1,8 +1,8 @@
 <?php
 
 // comment out the following two lines when deployed to production
-$host = parse_url($_SERVER['HTTP_HOST']);
 
+$host = parse_url('https://' . $_SERVER['HTTP_HOST']);
 define('MAIN_HOST', $host['host']);
 
 $fileDefines = __DIR__ . '/../config/' . MAIN_HOST . '.defines.php';
