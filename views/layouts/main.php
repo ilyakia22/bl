@@ -25,6 +25,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
 <head>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <?= YANDEX_METRIKA ?>
+    <?= GOOGLE_ANALYTICS ?>
 </head>
 
 <body class="d-flex flex-column h-100">

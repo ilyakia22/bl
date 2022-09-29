@@ -18,6 +18,7 @@ class FrontEndController extends Controller
     protected $metaUrl = null;
     protected $metaFrom = [];
     protected $metaTo = [];
+    protected $metaReplace = [];
     protected $canonical = null;
     protected $h1 = null;
     protected $pageTitle = null;
@@ -77,6 +78,10 @@ class FrontEndController extends Controller
 
     private function setMeta()
     {
+        if (count($this->metaReplace) > 0) {
+            $this->metaFrom = array_keys($this->metaReplace);
+            $this->metaTo = array_values($this->metaReplace);
+        }
         if (!empty($this->metaUrl)) {
             $meta = Meta::findOne(['url' => $this->metaUrl]);
             if ($meta == null) return false;

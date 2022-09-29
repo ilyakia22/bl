@@ -1,13 +1,14 @@
 <?php
 
 $params = require __DIR__ . '/params.php';
-$db = require __DIR__ . '/db.php';
+$db = require __DIR__ . '/' . MAIN_HOST . '.db.php';
 
 $config = [
     'id' => 'basic',
     'name' => 'Чернолист',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -74,6 +75,7 @@ if (YII_ENV_DEV) {
         'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
         //'allowedIPs' => ['127.0.0.1', '::1'],
+        //        'allowedIPs' => ['*'],
     ];
 
     $config['bootstrap'][] = 'gii';

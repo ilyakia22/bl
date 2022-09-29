@@ -20,10 +20,13 @@ class Wp implements UrlRuleInterface
 			if (isset($params['regionLink']) && isset($params['tagLink'])) {
 				return '/' . $params['regionLink'] . '/' . $params['tagLink'];
 			}
-		}
-		if ($route === 'phone/index') {
+		} else if ($route === 'phone/index') {
 			if (isset($params['number'])) {
 				return '/' . $params['number'];
+			}
+		} else if ($route === 'forum/city') {
+			if (isset($params['link'])) {
+				return '/' . $params['link'] . (isset($params['page']) ? '?page=' . $params['page'] : '');
 			}
 		}
 		return false;
@@ -38,6 +41,36 @@ class Wp implements UrlRuleInterface
 		} else if (preg_match('/^[0-9]{11}+$/si', $pathInfo, $m)) {
 			return ['phone/info', ['number' => $pathInfo]];
 		}
+
+		$paths = explode('/', $pathInfo);
+		if (count($paths) == 2) {
+			$linkTag = $paths[count($paths) - 1];
+			$tag = (new \yii\db\Query())
+				->select(['id'])
+				->from('forum_tag')
+				->where('link=:link', ['link' => $linkTag])
+				->one();
+			$tagId = 0;
+			if ($tag != null) {
+				$tagId = $tag['id'];
+				$linkRegion = $paths[0];
+				$cityCheck = (new \yii\db\Query())
+					->select(['id'])
+					->from('city')
+					->where(['link' => $linkRegion])
+					->one();
+				if (!empty($cityCheck)) return ['forum/city', ['link' => $linkRegion, 'cityId' => $cityCheck['id'], 'tagLink' => $linkTag, 'tagId' => $tag['id']]];
+			}
+		} else if (count($paths) == 1) {
+			$linkRegion = $paths[0];
+			$cityCheck = (new \yii\db\Query())
+				->select(['id'])
+				->from('city')
+				->where(['link' => $linkRegion])
+				->one();
+			if (!empty($cityCheck)) return ['forum/city', ['link' => $linkRegion, 'cityId' => $cityCheck['id']]];
+		}
+
 		return false;
 	}
 	/*

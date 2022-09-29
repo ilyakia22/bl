@@ -14,12 +14,111 @@ namespace app\controllers;
 use Yii;
 use FrontEndCotroller;
 use app\models\Forum;
+use app\models\Country;
+use app\models\Region;
+use app\models\City;
+use app\models\ForumTag;
+use yii\data\Pagination;
 
 /**
  * Implements hook_help().
  */
 class ForumController extends FrontEndController
 {
+
+    protected function __getQuery($countryId = 0, $regionId = 0, $cityId = 0, $tagId = 0)
+    {
+        $query =  Forum::find()->joinWith('user');
+        $query->joinWith('country');
+        $query->joinWith('region');
+        $query->joinWith('city');
+        if ($cityId != 0) $query->where(
+            [
+                'forum.city_id' => [$cityId, 0],
+                'forum.region_id' => [$regionId, 0],
+                'forum.country_id' => [$countryId],
+                'forum.status' => [Forum::STATUS_APPROVED, Forum::STATUS_NEW]
+            ]
+        );
+
+        if ($tagId > 0) {
+            $query->joinWith('tags');
+            $query->andWhere(['forum_to_forum_tag.forum_tag_id' => $tagId]);
+        }
+
+
+        //$query =  Forum::find()->joinWith('tags')->where(['forum_to_forum_tag.id' => 1]);
+
+
+        return $query;
+    }
+
+    public function actionCity($link, $cityId = 0, $tagLink = null, $tagId = 0)
+    {
+        $city = City::find()->where(['id' => $cityId])->one();
+        if ($city == null) {
+            throw new \yii\web\NotFoundHttpException('Oopsss1');
+        }
+
+        $forumTag = null;
+        if ($tagId > 0) {
+            $forumTag = ForumTag::find()->where(['id' => $tagId]);
+            if ($forumTag == null) throw new \yii\web\NotFoundHttpException('Oopsss2');
+        }
+
+        $region = $city->region;
+        $country = $city->country;
+
+        $query = $this->__getQuery(
+            $city->country_id,
+            $city->region_id,
+            $city->id,
+            $tagId
+        );
+
+        $countQuery = clone $query;
+        $pages = new Pagination([
+            'totalCount' => $countQuery->count(),
+            'pageSize' => 10,
+            'pageSizeParam' => false,
+            'validatePage' => false,
+            'route' => 'forum/city'
+        ]);
+
+        $forums = $query->offset($pages->offset)
+            ->orderBy('datetime_create DESC')
+            ->limit($pages->limit)
+            ->all();
+
+        if ($pages->getPage() > $pages->getPageCount() || $pages->getPage() == 0 && Yii::$app->request->get('page') !== null) {
+            $this->redirect(['forum/city', 'link' => $city->link]);
+        }
+
+        $this->metaUrl = '[city_url]';
+        $this->canonical = $city->getLink();
+
+        $this->metaReplace = [
+            '[city]' => $city->name,
+            '[city_v]' => $city->name_v,
+            '[city_net]' => $city->name_net,
+            '[city_vin]' => $city->name_vin,
+            '[city_url]' => $city->link,
+            '[region]' => $region != null ? $region->name : '',
+            '[region_v]' => $region != null ? $region->name_v : '',
+            '[region_net]' => $region != null ? $region->name_net : '',
+            '[region_url]' => $region != null ? $region->link : '',
+            '[date]' => \app\lib\CommonLib::dateRu('F Y'),
+            '[country]' => $country != null ? $country->name : '',
+            '[country_v]' => $country != null ? $country->name_v : '',
+            '[country_net]' => $country != null ? $country->name_net : '',
+            '[country_vin]' => $country != null ? $country->name_vin : '',
+            '[country_url]' => $country != null ? $country->link : '',
+            '[v_vo_na]' => $country != null ? $country->v_vo_na : '',
+            '[V_VO_NA]' =>  $country != null ? \app\lib\CommonLib::mb_ucfirst($country->v_vo_na) : ''
+        ];
+
+        return $this->render('city', ['forums' => $forums, 'pages' => $pages]);
+    }
 
     public function actionShow($forum_id)
     {

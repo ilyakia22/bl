@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\lib\CommonLib;
 
 /**
  * This is the model class for table "city".
@@ -112,5 +113,33 @@ class City extends \yii\db\ActiveRecord
             'synonym' => 'Synonym',
             'about' => 'About',
         ];
+    }
+
+    public function getRegion()
+    {
+        return $this->hasOne(\app\models\Region::class, ['id' => 'region_id']);
+    }
+
+    public function getCountry()
+    {
+        return $this->hasOne(\app\models\Country::class, ['id' => 'country_id']);
+    }
+
+    public function getLink()
+    {
+        if (empty($this->link)) {
+            $this->link = CommonLib::str2url($this->name);
+            $tmpLink = $this->link;
+            $i = 0;
+            do {
+                $checkRegion = self::find()->where('link LIKE :link AND id!=:id', array('link' => $tmpLink, 'id' => $this->id))->one();
+                if ($checkRegion != null) {
+                    $tmpLink = $this->link . '-' . ++$i;
+                }
+            } while ($checkRegion != null);
+            $this->link = $tmpLink;
+            $this->update(['link']);
+        }
+        return Yii::$app->urlManager->createUrl(['forum/city', 'link' => $this->link]);
     }
 }

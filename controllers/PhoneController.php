@@ -35,10 +35,7 @@ class PhoneController extends FrontEndController
         if ($pages->getPage() > $pages->getPageCount() || $pages->getPage() == 0 && Yii::$app->request->get('page') !== null) {
             $this->redirect(['phone/']);
         }
-        // echo $pages->getPage();
-        // echo "<br>";
-        // echo $pages->getPageCount();
-        // exit;
+
         $this->metaUrl = 'phone';
         $this->canonical = '/phone';
         return $this->render('index', ['commentPhones' => $commentPhones, 'pages' => $pages]);

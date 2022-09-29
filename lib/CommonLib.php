@@ -123,4 +123,16 @@ class CommonLib
         $str = trim($str, "-");
         return $str;
     }
+
+    public static function dateRu($str)
+    {
+        $ruMonths = array('январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь');
+        $enMonths = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+        $str = str_replace($enMonths, $ruMonths, date($str));
+        return $str;
+    }
+    public static function mb_ucfirst($text)
+    {
+        return mb_strtoupper(mb_substr($text, 0, 1)) . mb_strtolower(mb_substr($text, 1));
+    }
 }
