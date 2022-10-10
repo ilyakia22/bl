@@ -38,7 +38,7 @@ class SiteController extends ApiController
     {
         // echo 5;
         // echo Yii::$app->urlManager->createUrl(['site/test']);
-        return $this->render('test');
+        return [['id' => 2], ['id' => 4]];
         //print_r($this->viewPath);
         exit;
     }

@@ -18,6 +18,9 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'YqXHItRP6Js4lDSUNkafeB8Anjmfq_nE',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -56,10 +59,11 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => true,
+            'enableStrictParsing' => true,
             'rules' => [
                 //'<controller:\w+>/<action:[\w\-]+>' => '<controller>/<action>',
-                '<controller:\w+>' => '<controller>/index',
-                '<controller:\w+>/<action:[\w\-]+>' => '<controller>/<action>',
+                'GET <controller:\w+>' => '<controller>/index',
+                'GET <controller:\w+>/<action:[\w\-]+>' => '<controller>/<action>',
                 // [
                 //     // правиля для модуля admin
                 //     'class' => 'yii\web\GroupUrlRule',
