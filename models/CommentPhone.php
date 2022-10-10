@@ -65,8 +65,7 @@ class CommentPhone extends \yii\db\ActiveRecord
         return [
             [['id', 'type', 'name', 'phone_number', 'comment', 'ip', 'datetime', 'secret'], 'required'],
             [['id', 'type', 'phone_number', 'ip', 'user_id', 'datetime'], 'default', 'value' => null],
-            [['id', 'type', 'phone_number', 'ip', 'user_id', 'datetime'], 'integer'],
-            [['status'], 'boolean'],
+            [['id', 'status', 'type', 'phone_number', 'ip', 'user_id', 'datetime'], 'integer'],
             [['comment'], 'string'],
             [['name'], 'string', 'max' => 255],
             [['secret'], 'string', 'max' => 32],
