@@ -4,3 +4,8 @@ ALTER TABLE comment_phone ALTER COLUMN status SET DEFAULT 0;
 UPDATE comment_phone SET status=0;
 ALTER TABLE comment_phone ALTER COLUMN status SET NOT NULL;
 CREATE INDEX ON comment_phone (status);
+ALTER TABLE "comment_phone" ADD COLUMN "global_id" character varying(20) DEFAULT NULL;
+ALTER TABLE comment_phone RENAME COLUMN id TO id_old;
+ALTER TABLE comment_phone DROP CONSTRAINT idx_16488_primary;
+ALTER TABLE comment_phone ADD COLUMN id SERIAL PRIMARY KEY;
+ALTER TABLE comment_phone DROP COLUMN id_old;

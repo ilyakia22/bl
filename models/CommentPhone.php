@@ -63,12 +63,15 @@ class CommentPhone extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'type', 'name', 'phone_number', 'comment', 'ip', 'datetime', 'secret'], 'required'],
-            [['id', 'type', 'phone_number', 'ip', 'user_id', 'datetime'], 'default', 'value' => null],
+            [['type', 'name', 'phone_number', 'comment'], 'required'],
+            [['type', 'phone_number', 'ip', 'datetime'], 'default', 'value' => null],
+            [['secret'], 'default', 'value' => ''],
             [['id', 'status', 'type', 'phone_number', 'ip', 'user_id', 'datetime'], 'integer'],
             [['comment'], 'string'],
             [['name'], 'string', 'max' => 255],
             [['secret'], 'string', 'max' => 32],
+            [['global_id'], 'string', 'max' => 20],
+            ['phone_number', 'string', 'length' => 10],
             [['id'], 'unique'],
         ];
     }
@@ -92,6 +95,39 @@ class CommentPhone extends \yii\db\ActiveRecord
         ];
     }
 
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        if ($this->isNewRecord) {
+            $this->ip = ip2long(Yii::$app->getRequest()->getUserIP());
+            if (empty($this->datetime)) $this->datetime = new \yii\db\Expression('extract(epoch from now())');
+        }
+        $this->phone_number = CommentPhone::getPhoneIn($this->phone_number);
+        return true;
+    }
+
+    public static function getPhoneIn($str)
+    {
+        $str = preg_replace('/[^0-9]/', '', $str);
+        return mb_substr($str, -10);
+    }
+
+    // public function validatePassword($attribute, $params)
+    // {
+    //     if (preg_match('/(\+7|8)[0-9-\(\)]*/', $this->phone_number)) {
+    //         $this->phone_number = preg_replace('/[^0-9]/', '',  $this->phone_number);
+    //         if (
+    //             mb_strlen($this->phone_number) == 11
+    //             && (mb_substr($this->phone_number, 0, 1) == '7' ||
+    //                 mb_substr($this->phone_number, 0, 1) == '8')
+    //         ) $this->phone_number = mb_substr($this->phone_number, -10);
+    //     }
+    // }
+
+
     public function getPhone()
     {
         $phone = '';
@@ -113,6 +149,7 @@ class CommentPhone extends \yii\db\ActiveRecord
         $number .= $this->phone_number;
         return Yii::$app->urlManager->createUrl(['phone/info', 'number' => $number]);
     }
+
 
     public function getDate()
     {

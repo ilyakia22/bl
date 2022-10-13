@@ -17,11 +17,13 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
+            //'enableCsrfValidation' => isset($_REQUEST['secret_scrf']) && md5($_REQUEST['secret_scrf']) === '45db0cb82d0dc8d967c0ef23232bf9f3' ? false : true,
             'cookieValidationKey' => 'YqXHItRP6Js4lDSUNkafeB8Anjmfq_nE',
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
             ]
         ],
+
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
@@ -63,7 +65,9 @@ $config = [
             'rules' => [
                 //'<controller:\w+>/<action:[\w\-]+>' => '<controller>/<action>',
                 'GET <controller:\w+>' => '<controller>/index',
-                'GET <controller:\w+>/<action:[\w\-]+>' => '<controller>/<action>',
+                'GET <controller:\w+>/<action:[\w\-]+>' => '<controller>/<action>-index',
+                'PUT <controller:\w+>/<action:[\w\-]+>' => '<controller>/<action>-add',
+                'POST <controller:\w+>/<action:[\w\-]+>' => '<controller>/<action>-add',
                 // [
                 //     // правиля для модуля admin
                 //     'class' => 'yii\web\GroupUrlRule',

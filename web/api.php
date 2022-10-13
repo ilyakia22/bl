@@ -1,5 +1,6 @@
 <?php
 
+
 // comment out the following two lines when deployed to production
 
 $host = parse_url('https://' . $_SERVER['HTTP_HOST']);
