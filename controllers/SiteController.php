@@ -27,7 +27,15 @@ class SiteController extends FrontEndController
 {
     public function actionTest()
     {
-
+        $data = ['secret_scrf' => 'xxxyyyiii'];
+        $row = [];
+        $data['name'] = 'name23';
+        $data['comment'] = 'comment23';
+        $data['phone'] = '9997776644';
+        $data['type'] = 1;
+        $data['datetime'] = 1665691666; //1665691467
+        $data['global_id'] = '100_1';
+        $data['status'] = 1;
         // $data['comments1'] = [];
         // $data['comments1'][] = $row;
 

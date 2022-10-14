@@ -44,7 +44,8 @@ $this->params['breadcrumbs'][] = array('label' => $forum->title);
             <? foreach ($forum->tags as $tag) : ?>
                 <mark class="tag"><a href="<?= $tag->getLink($regionLink) ?>">#<?= $tag->value ?></a></mark>
             <? endforeach; ?>
+        <? endif; ?>
     </div>
+    <? include "comments.php" ?>
 
-<? endif; ?>
 </article>

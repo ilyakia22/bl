@@ -17,6 +17,7 @@ use app\models\Forum;
 use app\models\Country;
 use app\models\Region;
 use app\models\City;
+use app\models\ForumComment;
 use app\models\ForumTag;
 use yii\data\Pagination;
 
@@ -143,12 +144,26 @@ class ForumController extends FrontEndController
         // $criteria->order = 'datetime_create ASC';
         // $comments = ForumComment::model()->with(array('user'))->findAll($criteria);
 
-        // $tmp = array();
-        // foreach ($comments as $row) {
-        //     $tmp[$row->id] = $row;
-        // }
-        // $comments = $tmp;
-        // unset($tmp);
+        $comments = ForumComment::find()
+            ->where(
+                'forum_id=:forum_id ',
+                ['forum_id' => $forum->id]
+            )
+            ->orderBy('datetime_create ASC')
+            ->all();
+        //AND
+        // (
+        //     (status IN (' . ForumComment::STATUS_NEW . ',' . ForumComment::STATUS_APPROVED . ')) OR 
+        //     (status=' . ForumComment::STATUS_DELETED . ' AND ip=:ip AND datetime_create > extract(epoch from now()) - 3600) 
+        // )
+
+
+        $tmp = array();
+        foreach ($comments as $row) {
+            $tmp[$row->id] = $row;
+        }
+        $comments = $tmp;
+        unset($tmp);
 
         // $videos = ForumVideo::getVideoForum($forum_id);
         // $pics = ForumPhoto::getVideoForum($forum_id);
@@ -165,6 +180,6 @@ class ForumController extends FrontEndController
             $this->pageDescription = preg_replace("/\s+/", " ", $this->pageDescription);
         }
 
-        return $this->render('show', ['forum' => $forum]); //, 'comments' => $comments, 'videos' => $videos, 'pics' => $pics
+        return $this->render('show', ['forum' => $forum, 'comments' => $comments]); //, 'videos' => $videos, 'pics' => $pics
     }
 }
