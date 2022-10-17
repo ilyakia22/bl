@@ -3,6 +3,8 @@
 namespace app\controllers_api;
 
 use app\models\CommentPhone;
+use app\models\PhoneInfo;
+use app\models\City;
 use yii\web\Controller;
 use Yii;
 
@@ -61,5 +63,43 @@ class PhoneController extends ApiController
         if (!$this->checkRequired()) return $this->request400();
 
         return $this->saveComment(Yii::$app->request->bodyParams);
+    }
+
+    public function actionInfoAdd()
+    {
+        $this->required = ['city_id', 'name', 'phone'];
+        if (!$this->checkRequired()) return $this->request400();
+
+        $data = Yii::$app->request->bodyParams;
+
+        $phoneInfo = PhoneInfo::find()
+            ->where('id=:id', ['id' => $data['phone']])->one();
+
+        if ($phoneInfo == null)
+            $phoneInfo = new PhoneInfo;
+
+        $phoneInfo->id = $data['phone'];
+        $phoneInfo->city_id = $data['city_id'];
+        $phoneInfo->name = $data['name'];
+
+        $city = City::findOne($data['city_id']);
+        $dataComment = [];
+        $dataComment['name'] = $data['name'];
+        $dataComment['phone'] = $data['phone'];
+        $dataComment['type'] = 1;
+        $dataComment['status'] = 1;
+        $dataComment['datetime'] = $data['datetime'];
+        $dataComment['global_id'] = 'info';
+        $dataComment['comment'] = $city->country->name . ($city->region != null ? ', ' . $city->region->name : '') . ', ' . $city->name;
+
+        $saveComment = $this->saveComment($dataComment);
+
+        if (isset($saveComment['error'])) return $saveComment;
+
+        if ($phoneInfo->save()) {
+            return ['success' => 'ok'];
+        } else {
+            return ['error' => $phoneInfo->getErrors()];
+        }
     }
 }

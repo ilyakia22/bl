@@ -27,6 +27,34 @@ class SiteController extends FrontEndController
 {
     public function actionTest()
     {
+
+        $data = ['secret_scrf' => 'xxxyyyiii'];
+        $row = [];
+        $data['name'] = 'name23';
+        $data['city_id'] = 28;
+        $data['phone'] = '9997776644';
+        $data['datetime'] = 1665600666; //1665691467
+
+        // $data['comments1'] = [];
+        // $data['comments1'][] = $row;
+
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://bl-front.xx/api.php/phone/info");
+        //curl_setopt($ch, CURLOPT_URL, "http://ya.ru");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $server_output = curl_exec($ch);
+        $info = curl_getinfo($ch);
+        $error = curl_error($ch);
+        curl_close($ch);
+
+        print_r($info);
+        print_r($server_output);
+
+        exit;
         $data = ['secret_scrf' => 'xxxyyyiii'];
         $row = [];
         $data['name'] = 'name23';
