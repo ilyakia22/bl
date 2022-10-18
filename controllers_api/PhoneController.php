@@ -67,7 +67,7 @@ class PhoneController extends ApiController
 
     public function actionInfoAdd()
     {
-        $this->required = ['city_id', 'name', 'phone'];
+        $this->required = ['city_id', 'name', 'phone', 'comment'];
         if (!$this->checkRequired()) return $this->request400();
 
         $data = Yii::$app->request->bodyParams;
@@ -90,7 +90,7 @@ class PhoneController extends ApiController
         $dataComment['status'] = 1;
         $dataComment['datetime'] = $data['datetime'];
         $dataComment['global_id'] = 'info';
-        $dataComment['comment'] = $city->country->name . ($city->region != null ? ', ' . $city->region->name : '') . ', ' . $city->name;
+        $dataComment['comment'] = $data['comment'];
 
         $saveComment = $this->saveComment($dataComment);
 

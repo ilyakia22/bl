@@ -106,6 +106,7 @@ class CommentPhone extends \yii\db\ActiveRecord
             if (empty($this->datetime)) $this->datetime = new \yii\db\Expression('extract(epoch from now())');
         }
         $this->phone_number = CommentPhone::getPhoneIn($this->phone_number);
+        $this->comment = strip_tags($this->comment);
         return true;
     }
 
