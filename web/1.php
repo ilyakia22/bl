@@ -1,2 +1,3 @@
 <?
-print_r(123);
+echo 444;
+phpinfo();

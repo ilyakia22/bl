@@ -5,9 +5,11 @@ $db = require __DIR__ . '/' . MAIN_HOST . '.db.php';
 
 $config = [
     'id' => 'basic',
+    'viewPath' => dirname(__DIR__) . '/views_odmin',
     'name' => 'Чернолист',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'controllerNamespace' => 'app\\controllers_odmin',
 
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -18,17 +20,12 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'YqXHItRP6Js4lDSUNkafeB8Anjmfq_nE',
         ],
-        'session' => [
-            //'class' => 'yii\web\DbSession',
-            // 'db' => 'mydb',  // the application component ID of the DB connection. Defaults to 'db'.
-            // 'sessionTable' => 'my_session', // session table name. Defaults to 'session'.
-        ],
 
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\models\Odmin',
             'enableAutoLogin' => true,
             //'enableSession'   => false,
         ],
@@ -61,16 +58,13 @@ $config = [
 
         'urlManager' => [
             'enablePrettyUrl' => true,
-            'showScriptName' => false,
+            'showScriptName' => true,
             'rules' => [
-                '/' => 'site/index',
-                'phone' => 'phone/index',
-                [
-                    'class' => '\app\lib\Wp',
-                ],
+                'site/login' => 'site/login',
+                '<controller:\w+>' => '<controller>/index',
+                '<controller:\w+>/<action:[\w\-]+>' => '<controller>/<action>',
             ],
         ],
-
     ],
     'params' => $params,
 ];
