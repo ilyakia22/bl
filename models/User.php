@@ -51,6 +51,7 @@ use app\lib\CommonLib;
  */
 class User extends \yii\db\ActiveRecord
 {
+    public $authKey;
     /**
      * {@inheritdoc}
      */
@@ -133,5 +134,14 @@ class User extends \yii\db\ActiveRecord
         } else {
             return CommonLib::getAvatarLetter($this->name, $this->id);
         }
+    }
+
+    public static function findIdentity($id)
+    {
+        return static::findOne($id);
+    }
+    public function validateAuthKey($authKey)
+    {
+        return $this->authKey === $authKey;
     }
 }

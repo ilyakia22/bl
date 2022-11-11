@@ -36,8 +36,7 @@ class Meta extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'url', 'title', 'alt', 'description', 'keyword', 'h1', 'text_top', 'text_bottom', 'google_search'], 'required'],
-            [['id'], 'default', 'value' => null],
+            [['url'], 'required'],
             [['id'], 'integer'],
             [['is_ok', 'is_use_current'], 'boolean'],
             [['description', 'text_top', 'text_bottom', 'google_search'], 'string'],

@@ -1,0 +1,5 @@
+CREATE SEQUENCE meta_id_seq;
+ALTER SEQUENCE meta_id_seq RESTART WITH 16;
+ALTER TABLE meta 
+    ALTER COLUMN id 
+        SET DEFAULT NEXTVAL('meta_id_seq');

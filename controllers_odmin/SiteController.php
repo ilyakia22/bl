@@ -12,7 +12,7 @@ use yii\web\Response;
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends OdminController
 {
     /**
      * {@inheritdoc}
@@ -34,26 +34,16 @@ class SiteController extends Controller
                     ],
                 ],
             ],
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
+            // 'verbs' => [
+            //     'class' => VerbFilter::class,
+            //     'actions' => [
+            //         'logout' => ['post'],
+            //     ],
+            // ],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => \yii\web\ErrorAction::class,
-            ],
-        ];
-    }
+
 
     /**
      * Displays homepage.
@@ -62,7 +52,6 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-
         return $this->render('index');
     }
 
@@ -74,6 +63,7 @@ class SiteController extends Controller
     public function actionLogin()
     {
 
+        $msg = '';
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -83,12 +73,15 @@ class SiteController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
+        } else {
+            $msg = 'error login';
         }
 
         $model->password = '';
 
         return $this->render('login', [
             'model' => $model,
+            'msg' => $msg
         ]);
     }
 
