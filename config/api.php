@@ -28,7 +28,7 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\models\Usr',
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
@@ -66,6 +66,8 @@ $config = [
                 //'<controller:\w+>/<action:[\w\-]+>' => '<controller>/<action>',
                 'GET <controller:\w+>' => '<controller>/index',
                 'GET <controller:\w+>/<action:[\w\-]+>' => '<controller>/<action>-index',
+                'PUT <controller:\w+>' => '<controller>/add',
+                'POST <controller:\w+>' => '<controller>/add',
                 'PUT <controller:\w+>/<action:[\w\-]+>' => '<controller>/<action>-add',
                 'POST <controller:\w+>/<action:[\w\-]+>' => '<controller>/<action>-add',
                 // [
