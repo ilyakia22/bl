@@ -22,6 +22,12 @@ class Organization extends \yii\db\ActiveRecord
     const TYPE_MAN = 1;
     const TYPE_IP = 2;
     const TYPE_OOO = 3;
+    public static $typeTitles = [
+        Organization::TYPE_MAN => 'Физлицо',
+        Organization::TYPE_IP => 'Индивидуальный предприниматель',
+        Organization::TYPE_OOO => 'Общество с ограниченной ответственностью'
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -68,5 +74,17 @@ class Organization extends \yii\db\ActiveRecord
     public function getOrganizationPhones()
     {
         return $this->hasMany(OrganizationPhone::class, ['organization_id' => 'id']);
+    }
+
+    public function getTypeTitle()
+    {
+        if (isset(self::$typeTitles[$this->type])) return self::$typeTitles[$this->type];
+        else return false;
+    }
+
+    public function getOgrnTitle()
+    {
+        if ($this->type == Organization::TYPE_IP) return 'ОГРНИП';
+        return 'ОГРН';
     }
 }
