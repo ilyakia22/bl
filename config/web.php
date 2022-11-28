@@ -64,6 +64,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 '/' => 'site/index',
+                'organizations' => 'organization/index',
                 'phone' => 'phone/index',
                 [
                     'class' => '\app\lib\Wp',

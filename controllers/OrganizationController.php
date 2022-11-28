@@ -15,6 +15,7 @@ use Yii;
 use FrontEndCotroller;
 use app\models\Organization;
 use yii\data\Pagination;
+use yii\helpers\Url;
 
 /**
  * Implements hook_help().
@@ -22,13 +23,41 @@ use yii\data\Pagination;
 class OrganizationController extends FrontEndController
 {
 
-    public function actionIndex($inn)
+
+    public function actionIndex()
+    {
+        $this->metaUrl = 'organizations';
+
+
+        $query = Organization::find();
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 60, 'pageSizeParam' => false, 'validatePage' => false]);
+        $organizations = $query->offset($pages->offset)
+            ->orderBy('id DESC')
+            ->limit($pages->limit)
+            ->all();
+
+        if ($pages->getPage() > $pages->getPageCount() || $pages->getPage() == 0 && Yii::$app->request->get('page') !== null) {
+            $this->redirect(['organization/list']);
+        }
+
+        $this->canonical = Url::toRoute('organization/index');
+        return $this->render('index', ['organizations' => $organizations, 'pages' => $pages]);
+    }
+
+    public function actionInfo($inn)
     {
 
         $organizations = Organization::find()
             ->where('inn=:inn', ['inn' => $inn])
             ->all();
-
-        return $this->render('index', ['organizations' => $organizations]);
+        if (count($organizations) == 0) {
+            throw new \yii\web\NotFoundHttpException('Oopsss!');
+        }
+        $organization = $organizations[count($organizations) - 1];
+        $this->metaUrl = 'inn[inn]';
+        $this->metaReplace = ['[inn]' => $inn, '[name]' => $organization->fullname, '[ogrn]' => $organization->ogrn];
+        $this->canonical = $organization->getUrl();
+        return $this->render('info', ['organizations' => $organizations]);
     }
 }

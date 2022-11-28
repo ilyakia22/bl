@@ -2,18 +2,17 @@
 
 use yii\helpers\Url;
 ?>
-
+<h2>Организации?</h2>
 <div class="content-white">
     <? foreach ($organizations as $organization) : ?>
-        <?= $organization->typeTitle; ?><br />
-        <b>Название</b></br>
-        <?= $organization->fullname ?><br />
-        <b>Инн</b></br>
-        <?= $organization->inn ?><br />
-        <? if (!empty($organization->ogrn)) : ?>
-            <b><?= $organization->ogrnTitle ?></b></br>
-            <?= $organization->ogrn ?><br />
-        <? endif; ?>
-        <hr />
+        <div class="org-preview">
+            <a href="<?= $organization->getUrl() ?>"><?= $organization->inn ?></a> <?= $organization->fullname ?>
+        </div>
     <? endforeach; ?>
 </div>
+
+<?
+echo \yii\widgets\LinkPager::widget([
+    'pagination' => $pages,
+]);
+?>

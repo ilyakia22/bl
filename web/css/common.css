@@ -283,7 +283,7 @@ hr.post2comment {
 .who-call__comment {
 	padding: 15px;
 }
-.who-call__comment-note{
+.who-call__comment-note {
 	color: #777;
 	font-size: 14px;
 }
@@ -325,4 +325,10 @@ hr.post2comment {
 	color: #777777;
 	cursor: not-allowed;
 	background-color: #fff;
+}
+
+.org-preview {
+	padding: 15px;
+	border: 1px solid #eee;
+	margin-bottom: 1em;
 }

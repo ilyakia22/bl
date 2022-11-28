@@ -17,6 +17,7 @@ use FrontEndCotroller;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Forum;
+use app\models\Organization;
 use yii\data\Pagination;
 
 
@@ -113,6 +114,8 @@ class SiteController extends FrontEndController
 
         $forums = Forum::find()->where('tpl_id=0 AND status=:status', ['status' => Forum::STATUS_APPROVED])->orderBy('datetime_create DESC')->limit(10)->all();
 
+        $organizations = Organization::find()->orderBy('id DESC')->limit(10)->all();
+
         // $criteria = new CDbCriteria;
         // $criteria->limit = '30';
         // $criteria->order = 'datetime DESC';
@@ -132,7 +135,7 @@ class SiteController extends FrontEndController
         $this->metaUrl = 'index';
         $this->canonical = '/';
 
-        return $this->render('index', ['forums' => $forums, 'commentPhones' => $commentPhones]);
+        return $this->render('index', ['forums' => $forums, 'organizations' => $organizations, 'commentPhones' => $commentPhones]);
     }
 
     /**

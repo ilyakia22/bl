@@ -63,6 +63,7 @@ class PhoneController extends FrontEndController
         $this->metaUrl = '[phone]';
         $this->metaFrom = ['[phone]'];
         $this->metaTo = [$numberFormat];
+        $this->canonical = $commentPhones[0]->getUrl();
         return $this->render('info', ['number' => $number, 'numberFormat' => $numberFormat, 'commentPhones' => $commentPhones]);
     }
 }

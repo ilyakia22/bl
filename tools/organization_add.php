@@ -81,6 +81,8 @@ $data[37] =  'c_site';
 $data[38] =  'z_is_small';
 $data[39] =  'z_cody';
 
+include_once "funcs.php";
+$curl = new myCURL('chernolist.ru');
 $row = 1;
 if (($handle = fopen("E:/xxx.csv", "r")) !== FALSE) {
 	while (($d = fgetcsv($handle, 10000, ";")) !== FALSE) {
@@ -124,20 +126,11 @@ if (($handle = fopen("E:/xxx.csv", "r")) !== FALSE) {
 
 				$data3['cody'] = $data2['z_cody'];
 				//print_r($data3);
-				$ch = curl_init();
-				curl_setopt($ch, CURLOPT_URL, "http://bl-front.xx/api.php/organization/ip");
-				curl_setopt($ch, CURLOPT_POST, 1);
-				curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data3));
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-				$server_output = curl_exec($ch);
-				$info = curl_getinfo($ch);
-				$error = curl_error($ch);
-				curl_close($ch);
-				//echo 333;
-				echo $server_output . "\n";
+				$result = $curl->post("https://chernolist.ru/api.php/organization/ip", $data3);
+				print_r($result);
 				// print_r($info);
 				// echo 333;
-
+				exit;
 			}
 		}
 	}

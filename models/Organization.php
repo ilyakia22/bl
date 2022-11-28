@@ -28,6 +28,20 @@ class Organization extends \yii\db\ActiveRecord
         Organization::TYPE_OOO => 'Общество с ограниченной ответственностью'
     ];
 
+    public static $infoTitles = [
+        'name_en' => 'Иностранное название',
+        'date_reg' => 'Дата регистрации',
+        'country_reg' => 'Страна регистрации',
+        'is_small' => 'Малое предприятие',
+        'address' => 'Адрес',
+        'email' => 'Email',
+        'site' => 'Site',
+        'cody' => 'Коды по ОКВЭД',
+        'date_beg_eis' => 'Дата регистрации в ЕИС',
+        'date_end_eis' => 'Дата прекращения в ЕИС',
+    ];
+
+
     /**
      * {@inheritdoc}
      */
@@ -86,5 +100,20 @@ class Organization extends \yii\db\ActiveRecord
     {
         if ($this->type == Organization::TYPE_IP) return 'ОГРНИП';
         return 'ОГРН';
+    }
+
+    public function getInfoByKey($idx)
+    {
+        if (!isset($this->info[$idx])) return false;
+        if ($idx == 'is_small') {
+            if (in_array($this->info[$idx], [0, '0'])) return 'Нет';
+            else if (in_array($this->info[$idx], [1, '1'])) return 'Да';
+        }
+        return $this->info[$idx];
+    }
+
+    public function getUrl()
+    {
+        return Yii::$app->urlManager->createUrl(['organization/info', 'inn' => $this->inn]);
     }
 }

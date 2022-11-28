@@ -12,6 +12,8 @@ class Wp implements UrlRuleInterface
 	{
 		if ($route === 'phone/info' && isset($params['number'])) {
 			return '/' . $params['number'];
+		} else if ($route === 'organization/info' && isset($params['inn'])) {
+			return '/inn' . $params['inn'];
 		} else if ($route === 'forum/show') {
 			if (isset($params['id']) && isset($params['title'])) {
 				return '/' . \app\lib\CommonLib::str2url($params['title']) . '-' . $params['id'];
@@ -36,7 +38,7 @@ class Wp implements UrlRuleInterface
 	{
 		$pathInfo = $request->getPathInfo();
 		if (preg_match('/^inn([0-9]+)$/si', $pathInfo, $m)) {
-			return ['organization/index', ['inn' => $m[1]]];
+			return ['organization/info', ['inn' => $m[1]]];
 		} else if (preg_match('/-([0-9]+)$/si', $pathInfo, $m)) {
 			return ['forum/show', ['forum_id' => $m[1]]];
 		} else if (preg_match('/^[0-9]{11}+$/si', $pathInfo, $m)) {

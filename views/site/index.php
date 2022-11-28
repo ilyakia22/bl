@@ -17,12 +17,16 @@ use yii\helpers\Url;
     <? endforeach; ?>
 </div>
 <a href="<?= Url::toRoute('phone/'); ?>" class="button primary">Еще</a>
-<?
-// echo \yii\widgets\LinkPager::widget([
-//     'pagination' => $pages,
-// ]);
-?>
-
+<h2>Организации</h2>
+<div class="content-white">
+    <? foreach ($organizations as $organization) : ?>
+        <div class="org-preview">
+            <a href="<?= $organization->getUrl() ?>"><?= $organization->inn ?></a> <?= $organization->fullname ?>
+        </div>
+    <? endforeach; ?>
+</div>
+<a href="<?= Url::toRoute('organization/index'); ?>" class="button primary">Еще</a>
+<h2>Форум</h2>
 <? foreach ($forums as $k => $forum) : ?>
     <article class="preview">
         <div class="preview__usr">
