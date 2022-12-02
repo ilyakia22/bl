@@ -29,7 +29,7 @@ class OrganizationController extends FrontEndController
         $this->metaUrl = 'organizations';
 
 
-        $query = Organization::find();
+        $query = Organization::find()->select('fullname, ogrn, type');
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 60, 'pageSizeParam' => false, 'validatePage' => false]);
         $organizations = $query->offset($pages->offset)
@@ -59,5 +59,36 @@ class OrganizationController extends FrontEndController
         $this->metaReplace = ['[inn]' => $inn, '[name]' => $organization->fullname, '[ogrn]' => $organization->ogrn];
         $this->canonical = $organization->getUrl();
         return $this->render('info', ['organizations' => $organizations]);
+    }
+
+    public function actionOgrnip($ogrnip)
+    {
+
+        $organization = Organization::find()
+            ->where('ogrn=:ogrn', ['ogrn' => $ogrnip])
+            ->one();
+        if ($organization == null) {
+            throw new \yii\web\NotFoundHttpException('Oopsss!');
+        }
+
+        $this->metaUrl = 'ogrnip[ogrn]';
+        $this->metaReplace = ['[inn]' => $organization->inn, '[name]' => $organization->fullname, '[ogrn]' => $organization->ogrn];
+        $this->canonical = $organization->getUrl();
+        return $this->render('info2', ['organization' => $organization]);
+    }
+    public function actionOgrn($ogrn)
+    {
+
+        $organization = Organization::find()
+            ->where('ogrn=:ogrn', ['ogrn' => $ogrn])
+            ->one();
+        if ($organization == null) {
+            throw new \yii\web\NotFoundHttpException('Oopsss!');
+        }
+
+        $this->metaUrl = 'ogrnip[ogrn]';
+        $this->metaReplace = ['[inn]' => $organization->inn, '[name]' => $organization->fullname, '[ogrn]' => $organization->ogrn];
+        $this->canonical = $organization->getUrl();
+        return $this->render('info2', ['organization' => $organization]);
     }
 }

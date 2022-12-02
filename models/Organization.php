@@ -21,11 +21,11 @@ class Organization extends \yii\db\ActiveRecord
 {
     const TYPE_MAN = 1;
     const TYPE_IP = 2;
-    const TYPE_OOO = 3;
+    const TYPE_COMPANY = 3;
     public static $typeTitles = [
         Organization::TYPE_MAN => 'Физлицо',
         Organization::TYPE_IP => 'Индивидуальный предприниматель',
-        Organization::TYPE_OOO => 'Общество с ограниченной ответственностью'
+        Organization::TYPE_COMPANY => 'Компания'
     ];
 
     public static $infoTitles = [
@@ -39,6 +39,11 @@ class Organization extends \yii\db\ActiveRecord
         'cody' => 'Коды по ОКВЭД',
         'date_beg_eis' => 'Дата регистрации в ЕИС',
         'date_end_eis' => 'Дата прекращения в ЕИС',
+        'phone' => 'Телефон',
+        'kpp' => 'КПП',
+        'man_fio' => 'ФИО',
+        'man_job_title' => 'Должность',
+        'man_inn' => 'ИНН',
     ];
 
 
@@ -114,6 +119,7 @@ class Organization extends \yii\db\ActiveRecord
 
     public function getUrl()
     {
-        return Yii::$app->urlManager->createUrl(['organization/info', 'inn' => $this->inn]);
+        if ($this->type == Self::TYPE_IP) return Yii::$app->urlManager->createUrl(['organization/ip', 'ogrnip' => $this->ogrn]);
+        if ($this->type == Self::TYPE_COMPANY) return Yii::$app->urlManager->createUrl(['organization/company', 'ogrn' => $this->ogrn]);
     }
 }

@@ -68,4 +68,58 @@ class OrganizationController extends ApiController
 
         return $this->saveComment(Yii::$app->request->bodyParams);
     }
+
+    public function actionCompanyAdd()
+    {
+        $this->required = ['name', 'inn', 'ogrn'];
+        if (!$this->checkRequired()) return $this->request400();
+
+        $data = Yii::$app->request->bodyParams;
+
+        $organization = Organization::find()
+            ->where(
+                'inn=:inn AND ogrn=:ogrn',
+                ['inn' => $data['inn'], 'ogrn' => $data['ogrn']]
+            )
+            ->one();
+        $isNew = false;
+        if ($organization == null) {
+            $isNew = true;
+            $organization = new Organization;
+            $organization->type = Organization::TYPE_COMPANY;
+        }
+        $organization->ogrn = $data['ogrn'];
+        $organization->inn = $data['inn'];
+        $organization->fullname = $data['name'];
+        $info = $organization->info;
+        if (!is_array($info)) $info = [];
+
+        unset($data['secret_scrf']);
+        unset($data['name']);
+        unset($data['inn']);
+        unset($data['ogrnip']);
+
+        $info = $organization->info;
+        //$skip = ['phone', 'man_fio', 'man_job_title', 'man_inn'];
+        foreach ($data as $key => $field) {
+            //  if (in_array($key, $skip)) continue;
+            if (mb_strlen($field) != 0) {
+                $info[$key] = $field;
+            }
+        }
+
+        foreach ($info as $key => $value) {
+            if (mb_strlen($info[$key]) == 0) unset($info[$key]);
+        }
+
+        $organization->info = $info;
+
+        if ($organization->save()) {
+            return ['success' => 'ok', 'organization_id' => $organization->id, 'info' => $isNew ? 'added' : 'updated'];
+        } else {
+            return ['error' => $organization->getErrors()];
+        }
+
+        return $this->saveComment(Yii::$app->request->bodyParams);
+    }
 }

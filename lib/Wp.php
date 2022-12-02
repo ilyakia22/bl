@@ -14,6 +14,10 @@ class Wp implements UrlRuleInterface
 			return '/' . $params['number'];
 		} else if ($route === 'organization/info' && isset($params['inn'])) {
 			return '/inn' . $params['inn'];
+		} else if ($route === 'organization/ip' && isset($params['ogrnip'])) {
+			return '/ogrnip' . $params['ogrnip'];
+		} else if ($route === 'organization/company' && isset($params['ogrn'])) {
+			return '/ogrn' . $params['ogrn'];
 		} else if ($route === 'forum/show') {
 			if (isset($params['id']) && isset($params['title'])) {
 				return '/' . \app\lib\CommonLib::str2url($params['title']) . '-' . $params['id'];
@@ -37,7 +41,11 @@ class Wp implements UrlRuleInterface
 	public function parseRequest($manager, $request)
 	{
 		$pathInfo = $request->getPathInfo();
-		if (preg_match('/^inn([0-9]+)$/si', $pathInfo, $m)) {
+		if (preg_match('/^ogrnip([0-9]+)$/si', $pathInfo, $m)) {
+			return ['organization/ogrnip', ['ogrnip' => $m[1]]];
+		} else if (preg_match('/^ogrn([0-9]+)$/si', $pathInfo, $m)) {
+			return ['organization/ogrn', ['ogrn' => $m[1]]];
+		} else if (preg_match('/^inn([0-9]+)$/si', $pathInfo, $m)) {
 			return ['organization/info', ['inn' => $m[1]]];
 		} else if (preg_match('/-([0-9]+)$/si', $pathInfo, $m)) {
 			return ['forum/show', ['forum_id' => $m[1]]];

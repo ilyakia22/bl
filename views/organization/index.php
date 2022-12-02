@@ -6,7 +6,7 @@ use yii\helpers\Url;
 <div class="content-white">
     <? foreach ($organizations as $organization) : ?>
         <div class="org-preview">
-            <a href="<?= $organization->getUrl() ?>"><?= $organization->inn ?></a> <?= $organization->fullname ?>
+            <a href="<?= $organization->getUrl() ?>"><?= $organization->ogrn ?></a> <?= $organization->fullname ?>
         </div>
     <? endforeach; ?>
 </div>
