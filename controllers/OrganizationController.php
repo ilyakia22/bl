@@ -71,7 +71,7 @@ class OrganizationController extends FrontEndController
             throw new \yii\web\NotFoundHttpException('Oopsss!');
         }
 
-        $this->metaUrl = 'ogrn[number]';
+        $this->metaUrl = 'ogrnip[number]';
         $this->metaReplace = ['[inn]' => $organization->inn, '[name]' => $organization->fullname, '[ogrn]' => $organization->ogrn];
         $this->canonical = $organization->getUrl();
         return $this->render('info2', ['organization' => $organization]);
@@ -86,7 +86,7 @@ class OrganizationController extends FrontEndController
             throw new \yii\web\NotFoundHttpException('Oopsss!');
         }
 
-        $this->metaUrl = 'ogrnip[number]';
+        $this->metaUrl = 'ogrn[number]';
         $this->metaReplace = ['[inn]' => $organization->inn, '[name]' => $organization->fullname, '[ogrn]' => $organization->ogrn];
         $this->canonical = $organization->getUrl();
         return $this->render('info2', ['organization' => $organization]);
