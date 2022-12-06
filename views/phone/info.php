@@ -1,3 +1,14 @@
+<?
+
+use app\models\CommentPhone;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+?>
+<? if ($model->id > 0) : ?>
+	<div class="alert alert-success">
+		Спасибо, ваше сообщение принято!
+	</div>
+<? endif; ?>
 <div class="content-white">
 	<? foreach ($commentPhones as $commentPhone) : ?>
 		<div class="who-call">
@@ -16,3 +27,22 @@
 		</div>
 	<? endforeach; ?>
 </div>
+
+<? if ($model->id == 0) : ?>
+	<?php
+	$form = ActiveForm::begin([
+		'id' => 'login-form',
+		'options' => ['class' => 'form-horizontal'],
+	]) ?>
+	<?= $form->field($model, 'name', ['options' => ['class' => 'mt-3']]) ?>
+	<?= $form->field($model, 'type', ['options' => ['class' => 'mt-3']])->dropdownList(CommentPhone::getTypeList()) ?>
+	<?= $form->field($model, 'comment', ['options' => ['class' => 'mt-3']])->textarea() ?>
+
+	<div class="form-group mt-3">
+		<div class="col">
+			<?= Html::submitButton('Отправить', ['class' => 'btn btn-primary']) ?>
+		</div>
+	</div>
+	<?php ActiveForm::end() ?>
+
+<? endif; ?>

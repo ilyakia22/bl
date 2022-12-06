@@ -38,7 +38,7 @@ class OrganizationController extends FrontEndController
             ->all();
 
         if ($pages->getPage() > $pages->getPageCount() || $pages->getPage() == 0 && Yii::$app->request->get('page') !== null) {
-            $this->redirect(['organization/list']);
+            return $this->redirect(['organization/list']);
         }
 
         $this->canonical = Url::toRoute('organization/index');

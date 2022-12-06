@@ -82,6 +82,7 @@ class OrganizationController extends ApiController
                 ['inn' => $data['inn'], 'ogrn' => $data['ogrn']]
             )
             ->one();
+
         $isNew = false;
         if ($organization == null) {
             $isNew = true;
@@ -119,7 +120,5 @@ class OrganizationController extends ApiController
         } else {
             return ['error' => $organization->getErrors()];
         }
-
-        return $this->saveComment(Yii::$app->request->bodyParams);
     }
 }

@@ -24,9 +24,25 @@ class FrontEndController extends Controller
     protected $pageTitle = null;
     protected $pageKeywords = null;
     protected $pageDescription = null;
-    // protected $cityV = null;
-    // protected $regionV = null;
-    // protected $countryV = null;
+    public $errorMessage = '';
+    public $noticeMessage = '';
+    public $successMessage = '';
+
+    public function setNotice($message)
+    {
+        return Yii::$app->session->setFlash('notice', $message);
+    }
+
+    public function setSuccess($message)
+    {
+        return Yii::$app->session->setFlash('success', $message);
+    }
+
+    public function setError($message)
+    {
+        return Yii::$app->ussessioner->setFlash('error', $message);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -51,6 +67,24 @@ class FrontEndController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function beforeAction($action)
+    {
+        $countr = Yii::$app->request->cookies->get('countr');
+
+        Yii::$app->params['countr'] = $countr;
+        if (!preg_match('/[0-9a-zA-Z]{32}/', $countr)) {;
+            Yii::$app->params['countr'] = mb_substr(time() . md5(Yii::$app->getRequest()->getUserIP()), 0, 32);
+            $cookie = new \yii\web\Cookie([
+                'name' => 'countr',
+                'value' => Yii::$app->params['countr'],
+                'expire' => time() + 60 * 60 * 24 * 365
+            ]);
+            Yii::$app->response->cookies->add($cookie);
+        }
+
+        return parent::beforeAction($action);
     }
 
     /**

@@ -332,3 +332,6 @@ hr.post2comment {
 	border: 1px solid #eee;
 	margin-bottom: 1em;
 }
+.has-error .help-block {
+	color: var(--bs-danger);
+}

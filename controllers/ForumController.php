@@ -92,7 +92,7 @@ class ForumController extends FrontEndController
             ->all();
 
         if ($pages->getPage() > $pages->getPageCount() || $pages->getPage() == 0 && Yii::$app->request->get('page') !== null) {
-            $this->redirect(['forum/city', 'link' => $city->link]);
+            return $this->redirect(['forum/city', 'link' => $city->link]);
         }
 
         $this->metaUrl = '[city_url]';

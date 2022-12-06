@@ -14,6 +14,7 @@ namespace app\controllers;
 use Yii;
 use FrontEndCotroller;
 use app\models\CommentPhone;
+use Faker\Provider\bg_BG\PhoneNumber;
 use yii\data\Pagination;
 
 /**
@@ -33,7 +34,7 @@ class PhoneController extends FrontEndController
             ->all();
 
         if ($pages->getPage() > $pages->getPageCount() || $pages->getPage() == 0 && Yii::$app->request->get('page') !== null) {
-            $this->redirect(['phone/']);
+            return $this->redirect(['phone/']);
         }
 
         $this->metaUrl = 'phone';
@@ -43,6 +44,10 @@ class PhoneController extends FrontEndController
 
     public function actionInfo($number)
     {
+        if (isset($_GET['xxx'])) {
+            $this->setSuccess('Спасибо, Ваше сообщение добавлено!');
+            exit;
+        }
 
         $number = (string)$number;
         $numberFormat = $number;
@@ -52,10 +57,24 @@ class PhoneController extends FrontEndController
             throw new \yii\web\NotFoundHttpException('Oopsss!');
         }
 
+        $model = new CommentPhone;
+
+        if ($this->request->isPost) {
+            $model->phone_number = $number;
+            if ($model->load($this->request->post()) && $model->save()) {
+                $this->setSuccess('Спасибо, Ваше сообщение добавлено!');
+                return $this->redirect(['phone/info', 'number' => $number]);
+            } else {
+                $errors = $model->getErrors();
+            }
+        } else {
+            $model->loadDefaultValues();
+        }
+
         $commentPhones = CommentPhone::find()
             ->where(
-                'phone_number=:number',
-                ['number' => substr($number, -10)]
+                'phone_number=:number AND status=:status',
+                ['number' => substr($number, -10), 'status' => CommentPhone::STATUS_OK]
             )
             ->orderBy('datetime DESC')
             ->all();
@@ -64,6 +83,6 @@ class PhoneController extends FrontEndController
         $this->metaFrom = ['[phone]'];
         $this->metaTo = [$numberFormat];
         $this->canonical = $commentPhones[0]->getUrl();
-        return $this->render('info', ['number' => $number, 'numberFormat' => $numberFormat, 'commentPhones' => $commentPhones]);
+        return $this->render('info', ['model' => $model, 'number' => $number, 'numberFormat' => $numberFormat, 'commentPhones' => $commentPhones]);
     }
 }

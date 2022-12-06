@@ -71,7 +71,6 @@ class CommentPhone extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 255],
             [['secret'], 'string', 'max' => 32],
             [['global_id'], 'string', 'max' => 20],
-            ['phone_number', 'string', 'length' => 10],
             [['id'], 'unique'],
         ];
     }
@@ -83,11 +82,11 @@ class CommentPhone extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'type' => 'Type',
-            'name' => 'Name',
+            'type' => 'Тип звонка',
+            'name' => 'Имя',
             'phone_number' => 'Phone Number',
             'status' => 'Status',
-            'comment' => 'Comment',
+            'comment' => 'Комментарий',
             'ip' => 'Ip',
             'user_id' => 'User ID',
             'datetime' => 'Datetime',
@@ -104,6 +103,7 @@ class CommentPhone extends \yii\db\ActiveRecord
         if ($this->isNewRecord) {
             $this->ip = ip2long(Yii::$app->getRequest()->getUserIP());
             if (empty($this->datetime)) $this->datetime = new \yii\db\Expression('extract(epoch from now())');
+            if (empty($this->secret)) $this->secret = Yii::$app->params['countr'];
         }
         $this->phone_number = CommentPhone::getPhoneIn($this->phone_number);
         $this->comment = strip_tags($this->comment);
@@ -127,7 +127,10 @@ class CommentPhone extends \yii\db\ActiveRecord
     //         ) $this->phone_number = mb_substr($this->phone_number, -10);
     //     }
     // }
-
+    static function getTypeList()
+    {
+        return CommentPhone::$typeList;
+    }
 
     public function getPhone()
     {

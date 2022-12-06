@@ -52,6 +52,17 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
             <? if (isset($this->params['h1'])) : ?>
                 <h1><?= $this->params['h1'] ?></h1>
             <? endif; ?>
+
+            <?php if (Yii::$app->session->hasFlash('success')) : ?>
+                <div class="alert alert-success"><?= html_entity_decode(Yii::$app->session->getFlash('success')) ?></div>
+            <? endif; ?>
+            <?php if (Yii::$app->session->hasFlash('error')) : ?>
+                <div class="alert alert-danger"><?= html_entity_decode(Yii::$app->session->getFlash('error')) ?></div>
+            <? endif; ?>
+            <?php if (Yii::$app->session->hasFlash('notice')) : ?>
+                <div class="alert alert-info"><?= html_entity_decode(Yii::$app->session->getFlash('notice')) ?></div>
+            <? endif; ?>
+
             <?= $content ?>
         </div>
     </main>

@@ -4,6 +4,7 @@ $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/' . MAIN_HOST . '.db.php';
 
 $config = [
+    'language' => 'ru-RU',
     'id' => 'basic',
     'name' => 'Чернолист',
     'basePath' => dirname(__DIR__),
@@ -16,13 +17,14 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'YqXHItRP6Js4lDSUNkafeB8Anjmfq_nE',
+            //'cookieValidationKey' => 'YqXHItRP6Js4lDSUNkafeB8Anjmfq_nE',
+            'enableCookieValidation' => false,
         ],
-        'session' => [
-            //'class' => 'yii\web\DbSession',
-            // 'db' => 'mydb',  // the application component ID of the DB connection. Defaults to 'db'.
-            // 'sessionTable' => 'my_session', // session table name. Defaults to 'session'.
-        ],
+        // 'session' => [
+        //     //'class' => 'yii\web\DbSession',
+        //     // 'db' => 'mydb',  // the application component ID of the DB connection. Defaults to 'db'.
+        //     // 'sessionTable' => 'my_session', // session table name. Defaults to 'session'.
+        // ],
 
         'cache' => [
             'class' => 'yii\caching\FileCache',
