@@ -82,7 +82,7 @@ class PhoneController extends FrontEndController
         $this->metaUrl = '[phone]';
         $this->metaFrom = ['[phone]'];
         $this->metaTo = [$numberFormat];
-        $this->canonical = $commentPhones[0]->getUrl();
+        $this->canonical = Yii::$app->urlManager->createUrl(['phone/info', 'number' => $number]);
         return $this->render('info', ['model' => $model, 'number' => $number, 'numberFormat' => $numberFormat, 'commentPhones' => $commentPhones]);
     }
 }

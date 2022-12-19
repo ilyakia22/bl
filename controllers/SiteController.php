@@ -199,4 +199,19 @@ class SiteController extends FrontEndController
     {
         return $this->render('about');
     }
+
+    public function actionSearch()
+    {
+
+        $s = preg_replace('/[^0-9]/', '', Yii::$app->request->post('s'));
+        if (strlen($s) == 10 || strlen($s) == 11) {
+            if (substr($s, 0, 1) == '7' && strlen($s) == 11) {
+                $s = substr($s, -10);
+            }
+            return $this->redirect(['phone/info', 'number' => '7' . $s]);
+        }
+
+        $this->setError('Информация не найдена');
+        return $this->redirect(['site/index']);
+    }
 }

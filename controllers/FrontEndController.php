@@ -40,7 +40,7 @@ class FrontEndController extends Controller
 
     public function setError($message)
     {
-        return Yii::$app->ussessioner->setFlash('error', $message);
+        return Yii::$app->session->setFlash('error', $message);
     }
 
     /**
