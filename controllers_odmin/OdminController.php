@@ -37,6 +37,12 @@ class OdminController extends Controller
                     ],
                 ],
             ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
         ];
     }
     public function beforeAction($action)

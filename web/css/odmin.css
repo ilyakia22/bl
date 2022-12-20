@@ -1,3 +1,19 @@
+.container {
+	max-width: 100%;
+}
 .has-error .help-block {
 	color: red;
+}
+.status0 {
+	color: var(--bs-orange);
+}
+
+.status1 {
+	color: var(--bs-green);
+}
+.status2 {
+	color: var(--bs-blue);
+}
+.status10 {
+	color: var(--bs-red);
 }

@@ -38,6 +38,8 @@ OdminAsset::register($this);
         ]);
         $menuItems = [
             ['label' => 'Meta', 'url' => ['/meta/index']],
+            ['label' => 'Phone', 'url' => ['/phone/index']],
+            ['label' => 'Forum', 'url' => ['/forum/index']],
         ];
 
         echo Nav::widget([
