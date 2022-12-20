@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
 				<small><?= $commentPhone->getDate() ?></small>
 			</div>
 			<div class="who-call__comment">
-				<?= $commentPhone->comment ?>
+				<?= $commentPhone->formattedComment() ?>
 				<? if ($commentPhone->getTypeTitle()) : ?>
 					<div class="who-call__comment-note">
 						<?= $commentPhone->getTypeTitle() ?>
