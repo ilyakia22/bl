@@ -14,6 +14,7 @@ namespace app\controllers;
 use Yii;
 use FrontEndCotroller;
 use app\models\CommentPhone;
+use app\models\PhoneSearch;
 use Faker\Provider\bg_BG\PhoneNumber;
 use yii\data\Pagination;
 
@@ -85,5 +86,14 @@ class PhoneController extends FrontEndController
         $this->metaTo = [$numberFormat];
         $this->canonical = Yii::$app->urlManager->createUrl(['phone/info', 'number' => $number]);
         return $this->render('info', ['model' => $model, 'number' => $number, 'numberFormat' => $numberFormat, 'commentPhones' => $commentPhones]);
+    }
+
+    public function actionSearch($number)
+    {
+        $phoneSearch = new PhoneSearch;
+        $phoneSearch->phone_number = $number;
+        $phoneSearch->save();
+        $this->setSuccess('У данного телефона повышенный приоритет');
+        return $this->redirect(['phone/info', 'number' => $number]);
     }
 }

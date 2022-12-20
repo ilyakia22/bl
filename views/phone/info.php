@@ -2,6 +2,7 @@
 
 use app\models\CommentPhone;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 ?>
 <? if ($model->id > 0) : ?>
@@ -27,7 +28,11 @@ use yii\widgets\ActiveForm;
 		</div>
 	<? endforeach; ?>
 </div>
+<div class="alert alert-info">
+	В данный момент эта вся информация, которая нашлась в интернете. Но вы не расстраивайте, добавьте данную страницу в закладки и посетите ее позже.
+	Для ускорения процесса нажмите кпопку <a href="<?= Url::to(['phone/search', 'number' => $number]) ?>" class="btn btn-success">Ускорить процесс поиска</a>, чтобы повысить приоритет.
 
+</div>
 <? if ($model->id == 0) : ?>
 	<?php
 	$form = ActiveForm::begin([
