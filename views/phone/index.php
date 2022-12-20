@@ -11,7 +11,7 @@ use yii\helpers\Url;
                 <small><?= $commentPhone->getDate() ?></small>
             </div>
             <div class="who-call__comment">
-                <?= $commentPhone->comment ?>
+                <?= $commentPhone->formattedComment() ?>
             </div>
         </div>
     <? endforeach; ?>

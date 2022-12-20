@@ -170,4 +170,9 @@ class CommentPhone extends \yii\db\ActiveRecord
         if (isset(CommentPhone::$statusList[$this->status])) return CommentPhone::$statusList[$this->status];
         return '';
     }
+
+    public function formattedComment()
+    {
+        return nl2br($this->comment);
+    }
 }
