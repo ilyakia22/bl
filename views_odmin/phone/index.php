@@ -24,6 +24,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'status',
             'phone_number',
+            [
+                'attribute' => 'datetime',
+                'format' => 'raw',
+                'header' => 'datetime',
+                'value' => function ($model) {
+                    return date('Y-m-d H:i', $model->datetime);
+                },
+            ],
+            [
+                'attribute' => 'ip',
+                'format' => 'raw',
+                'header' => 'Ip',
+                'value' => function ($model) {
+                    return long2ip($model->ip);
+                },
+            ],
             'secret',
         ],
     ]); ?>
