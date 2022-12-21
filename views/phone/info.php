@@ -32,7 +32,15 @@ use yii\widgets\ActiveForm;
 
 
 	Это всё, что мы сейчас знаем о номере.<br />
-	Чтобы получить больше информации, оставьте запрос на поиск данных. <a href="<?= Url::to(['phone/search', 'number' => $number]) ?>" class="btn btn-success btn-sm">ЗАПРОСИТЬ</a><br />
+	Чтобы получить больше информации, оставьте запрос на поиск данных.
+	<?php $form = ActiveForm::begin(
+		[
+			'method' => 'get',
+			'action' => Url::to(['phone/search', 'number' => $number])
+		]
+	); ?>
+	<?= Html::submitButton('ЗАПРОСИТЬ', ['class' => 'btn btn-primary btn-sm']) ?>
+	<?php ActiveForm::end(); ?>
 	Добавьте эту страницу в закладки и проверьте обновление в течение 48 часов. Это бесплатно и кроме Вас никому недоступно.<br />
 
 
