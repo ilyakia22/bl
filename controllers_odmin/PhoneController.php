@@ -64,8 +64,9 @@ class PhoneController extends OdminController
 
     public function actionSetStatus($id, $goStatus, $status)
     {
-        $forum = CommentPhone::findOne($id);
-        $forum->updateAttributes(['status' => $status]);
-        return $this->redirect(['forum/index', 'status' => $goStatus]);
+
+        $commentPhone = CommentPhone::findOne($id);
+        $commentPhone->updateAttributes(['status' => $status]);
+        return $this->redirect(['phone/comments', 'status' => $goStatus]);
     }
 }
