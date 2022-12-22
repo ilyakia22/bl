@@ -39,6 +39,7 @@ OdminAsset::register($this);
         $menuItems = [
             ['label' => 'Meta', 'url' => ['/meta/index']],
             ['label' => 'Phone', 'url' => ['/phone/index']],
+            ['label' => 'Comments', 'url' => ['/phone/comments']],
             ['label' => 'Forum', 'url' => ['/forum/index']],
         ];
 

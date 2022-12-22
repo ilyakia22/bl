@@ -35,7 +35,6 @@ class ForumController extends OdminController
                     'id' => SORT_DESC,
                 ]
             ],
-
         ]);
 
         return $this->render('index', [

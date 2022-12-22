@@ -26,7 +26,7 @@ class CommentPhone extends \yii\db\ActiveRecord
     const STATUS_SPAM = 10;
     static public  $statusList = [
         CommentPhone::STATUS_NEW => 'Новый',
-        CommentPhone::STATUS_OK => 'Решен',
+        CommentPhone::STATUS_OK => 'Ok',
         CommentPhone::STATUS_SPAM => 'Спам',
     ];
 
