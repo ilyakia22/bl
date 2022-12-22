@@ -1,9 +1,10 @@
 <div class="card mb-3">
 	<div class="card-header">
-		<a href="/7<?= $model->phone_number ?>">#<b><?= $model->id ?></b></a>, <?= \app\lib\CommonLib::showDate($model->datetime) ?>, <?= long2ip($model->ip) ?>,
+		#<b><?= $model->id ?></b>, <?= \app\lib\CommonLib::showDate($model->datetime) ?>, <?= long2ip($model->ip) ?>,
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		globalId: <b><?= $model->global_id ?></b>,
 		secret:<b><?= $model->secret ?></b>
+		<a href="/7<?= $model->phone_number ?>"><b><?= $model->phone ?></b></a>
 	</div>
 	<div class="card-body">
 		<div class="row">
