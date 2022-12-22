@@ -42,14 +42,10 @@ use yii\widgets\ActiveForm;
 	<?= Html::submitButton('ЗАПРОСИТЬ', ['class' => 'btn btn-primary btn-sm']) ?>
 	<?php ActiveForm::end(); ?>
 	Добавьте эту страницу в закладки и проверьте обновление в течение 48 часов. Это бесплатно и кроме Вас никому недоступно.<br />
-
-
-
-
-
-
 </div>
+
 <? if ($model->id == 0) : ?>
+	<h3>Оставьте ваш комментарий, возможно кому-то это будет полезно.</h3>
 	<?php
 	$form = ActiveForm::begin([
 		'id' => 'login-form',
