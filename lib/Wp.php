@@ -30,9 +30,9 @@ class Wp implements UrlRuleInterface
 			if (isset($params['number'])) {
 				return '/' . $params['number'];
 			}
-		} else if ($route === 'forum/city') {
+		} else if ($route === 'city/index') {
 			if (isset($params['link'])) {
-				return '/' . $params['link'] . (isset($params['page']) ? '?page=' . $params['page'] : '');
+				return '/' . $params['link'];
 			}
 		}
 		return false;
@@ -79,7 +79,7 @@ class Wp implements UrlRuleInterface
 				->from('city')
 				->where(['link' => $linkRegion])
 				->one();
-			if (!empty($cityCheck)) return ['forum/city', ['link' => $linkRegion, 'cityId' => $cityCheck['id']]];
+			if (!empty($cityCheck)) return ['city/index', ['link' => $linkRegion, 'cityId' => $cityCheck['id']]];
 		}
 
 		return false;

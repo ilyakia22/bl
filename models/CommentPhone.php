@@ -175,4 +175,9 @@ class CommentPhone extends \yii\db\ActiveRecord
     {
         return nl2br($this->comment);
     }
+
+    public function getPhoneInfo()
+    {
+        return $this->hasOne(\app\models\PhoneInfo::class, ['id' => 'phone_number']);
+    }
 }
