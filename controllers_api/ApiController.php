@@ -14,6 +14,7 @@ class ApiController extends Controller
     private $isSuperUser = false;
     private $msg = '';
     protected $required = [];
+    protected $data = [];
 
     public function beforeAction($action)
     {
@@ -34,7 +35,7 @@ class ApiController extends Controller
     protected function checkRequired()
     {
         foreach ($this->required as $field) {
-            if (empty(Yii::$app->request->getBodyParam($field))) {
+            if (empty($this->data[$field])) {
                 $this->msg = $field . ' is required';
                 return false;
             }

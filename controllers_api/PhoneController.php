@@ -49,7 +49,10 @@ class PhoneController extends ApiController
         if ($this->isSuperUser())
             $commentPhone->secret = 'superuser';
 
-        if ($commentPhone->save()) {
+        if ($commentPhone != null && empty($data['comment'])) {
+            $commentPhone->delete();
+            return ['success' => 'ok'];
+        } else if ($commentPhone->save()) {
             return ['success' => 'ok'];
         } else {
             return ['error' => $commentPhone->getErrors()];
@@ -64,37 +67,49 @@ class PhoneController extends ApiController
 
         return $this->saveComment(Yii::$app->request->bodyParams);
     }
-
-    public function actionInfoAdd()
+    public function actionInfoMassAdd()
     {
-        $this->required = ['city_id', 'name', 'phone', 'comment'];
+        $data = Yii::$app->request->bodyParams;
+        $return = [];
+        foreach ($data['rows'] as $row) {
+            $return[$row['phone']] = $this->actionInfoAdd($row);
+        }
+        return $return;
+    }
+
+    public function actionInfoAdd($data = null)
+    {
+        $this->required = ['city_id', 'name', 'phone'];
+        if ($data == null)
+            $this->data = Yii::$app->request->bodyParams;
+        else
+            $this->data = $data;
+
         if (!$this->checkRequired()) return $this->request400();
 
-        $data = Yii::$app->request->bodyParams;
-
         $phoneInfo = PhoneInfo::find()
-            ->where('id=:id', ['id' => $data['phone']])->one();
+            ->where('id=:id', ['id' => $this->data['phone']])->one();
 
         if ($phoneInfo == null)
             $phoneInfo = new PhoneInfo;
 
-        $phoneInfo->id = $data['phone'];
-        $phoneInfo->city_id = $data['city_id'];
-        $phoneInfo->name = $data['name'];
+        $phoneInfo->id = $this->data['phone'];
+        $phoneInfo->city_id = $this->data['city_id'];
+        $phoneInfo->name = $this->data['name'];
 
-        $city = City::findOne($data['city_id']);
-        $dataComment = [];
-        $dataComment['name'] = $data['name'];
-        $dataComment['phone'] = $data['phone'];
-        $dataComment['type'] = 1;
-        $dataComment['status'] = 1;
-        $dataComment['datetime'] = $data['datetime'];
-        $dataComment['global_id'] = 'info';
-        $dataComment['comment'] = $data['comment'];
-
-        $saveComment = $this->saveComment($dataComment);
-
-        if (isset($saveComment['error'])) return $saveComment;
+        $city = City::findOne($this->data['city_id']);
+        if (!empty($this->data['comment'])) {
+            $dataComment = [];
+            $dataComment['name'] = $this->data['name'];
+            $dataComment['phone'] = $this->data['phone'];
+            $dataComment['type'] = 1;
+            $dataComment['status'] = 1;
+            $dataComment['datetime'] = $this->data['datetime'];
+            $dataComment['global_id'] = 'info';
+            $dataComment['comment'] = $this->data['comment'];
+            $saveComment = $this->saveComment($dataComment);
+            if (isset($saveComment['error'])) return $saveComment;
+        }
 
         if ($phoneInfo->save()) {
             return ['success' => 'ok'];
