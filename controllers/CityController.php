@@ -55,7 +55,7 @@ class CityController extends FrontEndController
         $comments = CommentPhone::find()
             ->joinWith('phoneInfo')
             ->where('comment_phone.status=:status AND phone_info.city_id=:city_id', ['status' => CommentPhone::STATUS_OK, 'city_id' => $city->id])
-            ->orderBy('datetime ASC')
+            //->orderBy('datetime ASC')
             ->limit(5)
             ->all();
 
