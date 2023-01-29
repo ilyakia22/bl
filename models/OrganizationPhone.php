@@ -56,4 +56,22 @@ class OrganizationPhone extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Organization::class, ['id' => 'organization_id']);
     }
+
+    static public function add($number, $organization_id, $note = null)
+    {
+        $organizationPhone = Organization::find(
+            'number=:number AND orgranization_id=:organization_id',
+            [
+                'number' => $number,
+                'orgranization_id' => $organization_id
+            ]
+        );
+        if ($organizationPhone == null) {
+            $organizationPhone = new OrganizationPhone;
+        }
+        $organizationPhone->number = $number;
+        $organizationPhone->organization_id = $organization_id;
+        $organizationPhone->note = $note;
+        return $organizationPhone->save();
+    }
 }

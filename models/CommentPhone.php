@@ -112,8 +112,7 @@ class CommentPhone extends \yii\db\ActiveRecord
 
     public static function getPhoneIn($str)
     {
-        $str = preg_replace('/[^0-9]/', '', $str);
-        return mb_substr($str, -10);
+        return \app\lib\PhoneTool::phoneIn($str);
     }
 
     // public function validatePassword($attribute, $params)
