@@ -11,6 +11,18 @@ use yii\widgets\ActiveForm;
 	</div>
 <? endif; ?>
 <div class="content-white">
+	<? if ($organizationPhone != null) : ?>
+		<div class="who-call">
+			<div class="who-call__info">
+				Важная информация
+			</div>
+			<div class="who-call__comment">
+				Телефон принадлежит <a href="<?= $organizationPhone->organization->getUrl() ?>"><?= $organizationPhone->organization->fullname ?></a>
+			</div>
+		</div>
+
+	<? endif; ?>
+
 	<? foreach ($commentPhones as $commentPhone) : ?>
 		<div class="who-call">
 			<div class="who-call__info">
@@ -43,6 +55,7 @@ use yii\widgets\ActiveForm;
 	<?php ActiveForm::end(); ?>
 	Добавьте эту страницу в закладки и проверьте обновление в течение 48 часов. Это бесплатно и кроме Вас никому недоступно.<br />
 </div>
+
 
 <? if ($model->id == 0) : ?>
 	<h3>Оставьте ваш комментарий, возможно кому-то это будет полезно.</h3>

@@ -15,6 +15,8 @@ use Yii;
 use FrontEndCotroller;
 use app\models\CommentPhone;
 use app\models\PhoneSearch;
+use app\models\OrganizationPhone;
+use app\lib\PhoneTool;
 use Faker\Provider\bg_BG\PhoneNumber;
 use yii\data\Pagination;
 
@@ -81,11 +83,19 @@ class PhoneController extends FrontEndController
             ->all();
 
 
+        $organizationPhone = OrganizationPhone::find(['number' => PhoneTool::phoneIn($number)])->one();
+
         $this->metaUrl = '[phone]';
         $this->metaFrom = ['[phone]'];
         $this->metaTo = [$numberFormat];
         $this->canonical = Yii::$app->urlManager->createUrl(['phone/info', 'number' => $number]);
-        return $this->render('info', ['model' => $model, 'number' => $number, 'numberFormat' => $numberFormat, 'commentPhones' => $commentPhones]);
+        return $this->render('info', [
+            'model' => $model,
+            'number' => $number,
+            'numberFormat' => $numberFormat,
+            'commentPhones' => $commentPhones,
+            'organizationPhone' => $organizationPhone,
+        ]);
     }
 
     public function actionSearch($number)
