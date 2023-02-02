@@ -83,7 +83,7 @@ class PhoneController extends FrontEndController
             ->all();
 
 
-        $organizationPhone = OrganizationPhone::find(['number' => PhoneTool::phoneIn($number)])->one();
+        $organizationPhone = OrganizationPhone::findOne(['number' => PhoneTool::phoneIn($number)]);
 
         $this->metaUrl = '[phone]';
         $this->metaFrom = ['[phone]'];
