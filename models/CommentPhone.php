@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use \app\lib\PhoneTool;
 
 /**
  * This is the model class for table "comment_phone".
@@ -133,24 +134,12 @@ class CommentPhone extends \yii\db\ActiveRecord
 
     public function getPhone()
     {
-        $phone = '';
-        $sub = substr($this->phone_number, 0, 3);
-        if ($sub == 800) $phone .= '8';
-        else $phone .= '7';
-        $phone .= $this->phone_number;
-        $number = (string)$phone;
-        $numberFormat =  $number[0] . '(' . $number[1] . $number[2] . $number[3] . ')' . $number[4] . $number[5] . $number[6] . '-' . $number[7] . $number[8] . '-' . $number[9] . $number[10];
-        if ($sub != 800) $numberFormat = '+' . $numberFormat;
-        return $numberFormat;
+        return PhoneTool::formated($this->phone_number);
     }
 
     public function getUrl()
     {
-        $sub = substr($this->phone_number, 0, 3);
-        if ($sub == 800) $number = '8';
-        else $number = '7';
-        $number .= $this->phone_number;
-        return Yii::$app->urlManager->createUrl(['phone/info', 'number' => $number]);
+        return Yii::$app->urlManager->createUrl(['phone/info', 'number' => PhoneTool::forUrl($this->phone_number)]);
     }
 
 

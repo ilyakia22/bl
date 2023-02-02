@@ -59,11 +59,12 @@ class OrganizationPhone extends \yii\db\ActiveRecord
 
     static public function add($number, $organization_id, $note = null)
     {
-        $organizationPhone = Organization::find(
-            'number=:number AND orgranization_id=:organization_id',
+        $number = \app\lib\PhoneTool::phoneIn($number);
+
+        $organizationPhone = OrganizationPhone::findOne(
             [
                 'number' => $number,
-                'orgranization_id' => $organization_id
+                'organization_id' => $organization_id
             ]
         );
         if ($organizationPhone == null) {

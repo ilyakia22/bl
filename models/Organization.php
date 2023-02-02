@@ -94,6 +94,10 @@ class Organization extends \yii\db\ActiveRecord
     {
         return $this->hasMany(OrganizationPhone::class, ['organization_id' => 'id']);
     }
+    public function getCodys()
+    {
+        return $this->hasMany(Cody::class, ['id' => 'cody_id'])->viaTable('cody_to_organization', ['organization_id' => 'id']);
+    }
 
     public function getTypeTitle()
     {

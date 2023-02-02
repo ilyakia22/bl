@@ -17,6 +17,7 @@ use FrontEndCotroller;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Forum;
+use app\models\Cody;
 use app\models\Organization;
 use yii\data\Pagination;
 
@@ -29,6 +30,11 @@ class SiteController extends FrontEndController
     public function actionTest()
     {
 
+        $cody = Cody::find('value=:value', ['value' => '41.20'])->one();
+        print_r($cody);
+        $cody = Cody::find('value=:value', ['value' => '41.20'])->one();
+        print_r($cody);
+        exit;
         $data = ['secret_scrf' => 'xxxyyyiii'];
         $row = [];
         $data['name'] = 'name23';

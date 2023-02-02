@@ -36,7 +36,7 @@ class ApiController extends Controller
     {
         foreach ($this->required as $field) {
             if (empty($this->data[$field])) {
-                $this->msg = $field . ' is required';
+                $this->msg = $field . ' is required. error 1';
                 return false;
             }
         }
