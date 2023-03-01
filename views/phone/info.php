@@ -20,7 +20,16 @@ use yii\widgets\ActiveForm;
 				Телефон принадлежит <a href="<?= $organizationPhone->organization->getUrl() ?>"><?= $organizationPhone->organization->fullname ?></a>
 			</div>
 		</div>
-
+	<? endif; ?>
+	<? if ($phoneInfo != null && $phoneInfo->city != null) : ?>
+		<div class="who-call">
+			<div class="who-call__info">
+				Важная информация
+			</div>
+			<div class="who-call__comment">
+				<?= $phoneInfo->city->region->name ?>, <?= $phoneInfo->city->name ?>. <?= $phoneInfo->name ?>.
+			</div>
+		</div>
 	<? endif; ?>
 
 	<? foreach ($commentPhones as $commentPhone) : ?>
