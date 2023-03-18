@@ -3,7 +3,9 @@
 namespace app\controllers_odmin;
 
 use app\models\CommentPhone;
+use app\models\PhoneInfo;
 use app\models\PhoneSearch;
+use app\lib\PhoneTool;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -64,9 +66,30 @@ class PhoneController extends OdminController
 
     public function actionSetStatus($id, $goStatus, $status)
     {
-
         $commentPhone = CommentPhone::findOne($id);
         $commentPhone->updateAttributes(['status' => $status]);
         return $this->redirect(['phone/comments', 'status' => $goStatus]);
+    }
+
+
+    public function actionSetStatusPhoneInfo($phone, $status)
+    {
+        $phoneInfo = PhoneInfo::findOne($phone);
+        if ($phoneInfo == null) {
+            if ($status == PhoneInfo::STATUS_PD) {
+                $phoneInfo = new PhoneInfo;
+                $phoneInfo->name = 'PD';
+                $phoneInfo->id = PhoneTool::phoneIn($phone);
+                $phoneInfo->city_id = null;
+            } else {
+                throw new NotFoundHttpException('The requested page does not exist.');
+            }
+        }
+        $phoneInfo->status = $status;
+        if (!$phoneInfo->save()) {
+
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+        die(json_encode(['status' => $status, 'statusTitle' => PhoneInfo::statusTitle($status), 'phone' => $phone]));
     }
 }

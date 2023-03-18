@@ -17,3 +17,10 @@
 .status10 {
 	color: var(--bs-red);
 }
+
+.phoneInfoStatus0 {
+	color: var(--bs-green);
+}
+.phoneInfoStatus1 {
+	color: var(--bs-red);
+}

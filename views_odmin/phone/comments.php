@@ -34,3 +34,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 </div>
+
+<? $this->registerJs('
+    $(".setPhoneInfo").click(function () {
+            $.ajax({
+                url: "' . \yii\helpers\Url::toRoute(['phone/set-status-phone-info']) . '",
+                dataType: "json",
+                data: "phone="+$(this).data(\'phone\')+"&status="+$(this).data(\'status\'),
+                success: function(data){
+                    $("#phoneInfoStatus"+data.phone).text(data.statusTitle);
+                    $("#phoneInfoStatus"+data.phone).removeClass(\'phoneInfoStatus0 phoneInfoStatus1\');
+                    $("#phoneInfoStatus"+data.phone).addClass(\'phoneInfoStatus\'+data.status);
+                },
+                error: function () {
+                    alert(\'Oopps!!\');
+                }
+            });
+        });
+'); ?>

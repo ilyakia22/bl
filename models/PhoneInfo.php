@@ -15,6 +15,12 @@ use Yii;
  */
 class PhoneInfo extends \yii\db\ActiveRecord
 {
+    const STATUS_OK = 0;
+    const STATUS_PD = 1;
+    public static $statuses = [
+        PhoneInfo::STATUS_OK => 'OK',
+        PhoneInfo::STATUS_PD => 'PD',
+    ];
     /**
      * {@inheritdoc}
      */
@@ -31,7 +37,7 @@ class PhoneInfo extends \yii\db\ActiveRecord
         return [
             [['id', 'name'], 'required'],
             [['id', 'city_id'], 'default', 'value' => null],
-            [['id', 'city_id'], 'integer'],
+            [['id', 'status', 'city_id'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['id'], 'unique'],
             [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::class, 'targetAttribute' => ['city_id' => 'id']],
@@ -58,5 +64,14 @@ class PhoneInfo extends \yii\db\ActiveRecord
     public function getCity()
     {
         return $this->hasOne(City::class, ['id' => 'city_id']);
+    }
+    public function getStatusTitle()
+    {
+        return PhoneInfo::statusTitle($this->status);
+    }
+    public static function  statusTitle($status)
+    {
+        if (isset(PhoneInfo::$statuses[$status])) return PhoneInfo::$statuses[$status];
+        return '??';
     }
 }

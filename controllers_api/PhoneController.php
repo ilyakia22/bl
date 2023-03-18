@@ -117,4 +117,8 @@ class PhoneController extends ApiController
             return ['error' => $phoneInfo->getErrors()];
         }
     }
+
+    public function setStatusPhoneInfo($phoneNumber, $status)
+    {
+    }
 }

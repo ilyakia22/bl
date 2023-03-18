@@ -20,6 +20,7 @@ use app\lib\PhoneTool;
 use app\models\PhoneInfo;
 use Faker\Provider\bg_BG\PhoneNumber;
 use yii\data\Pagination;
+use yii\web\NotFoundHttpException;
 
 /**
  * Implements hook_help().
@@ -54,6 +55,10 @@ class PhoneController extends FrontEndController
         }
 
         $number = (string)$number;
+        $phoneInfo = PhoneInfo::findOne(PhoneTool::phoneIn($number));
+        if ($phoneInfo->status == PhoneInfo::STATUS_PD)
+            throw new NotFoundHttpException('The requested page does not exist.');
+
         $numberFormat = $number;
         if (strlen($number) == 11) {
             $numberFormat = '+' . $number[0] . '(' . $number[1] . $number[2] . $number[3] . ')' . $number[4] . $number[5] . $number[6] . '-' . $number[7] . $number[8] . '-' . $number[9] . $number[10];
@@ -85,8 +90,6 @@ class PhoneController extends FrontEndController
 
 
         $organizationPhone = OrganizationPhone::findOne(['number' => PhoneTool::phoneIn($number)]);
-        $phoneInfo = PhoneInfo::findOne(PhoneTool::phoneIn($number));
-
 
         $this->metaUrl = '[phone]';
         $this->metaFrom = ['[phone]'];
