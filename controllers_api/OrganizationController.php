@@ -130,6 +130,7 @@ class OrganizationController extends ApiController
         foreach ($skip as $key) {
             if (isset($info[$key])) unset($info[$key]);
         }
+
         $organization->info = $info;
 
         if ($organization->save()) {
