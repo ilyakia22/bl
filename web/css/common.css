@@ -7,9 +7,8 @@ a {
 a:hover {
 	text-decoration: none;
 }
-.container.main {
-	margin: 0 auto;
-	max-width: 800px;
+.container {
+	max-width: 1200px;
 }
 .breadcrumb {
 	padding: 8px 15px;
@@ -328,10 +327,29 @@ hr.post2comment {
 }
 
 .org-preview {
-	padding: 15px;
+	width: 320px;
 	border: 1px solid #eee;
 	margin-bottom: 1em;
 }
+.org-preview__header {
+	background: #eee;
+	padding: 5px 10px;
+	font-weight: 600;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: #444;
+}
+.org-preview__body {
+	padding: 5px 10px;
+}
 .has-error .help-block {
 	color: var(--bs-danger);
+}
+
+.org-info {
+}
+.org-info > b,
+.org-info > span {
+	display: block;
 }

@@ -56,7 +56,7 @@ class PhoneController extends FrontEndController
 
         $number = (string)$number;
         $phoneInfo = PhoneInfo::findOne(PhoneTool::phoneIn($number));
-        if ($phoneInfo->status == PhoneInfo::STATUS_PD)
+        if ($phoneInfo != null && $phoneInfo->status == PhoneInfo::STATUS_PD)
             throw new NotFoundHttpException('The requested page does not exist.');
 
         $numberFormat = $number;

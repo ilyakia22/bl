@@ -16,6 +16,7 @@ use FrontEndCotroller;
 use app\models\Organization;
 use yii\data\Pagination;
 use yii\helpers\Url;
+use app\models\CommentPhone;
 
 /**
  * Implements hook_help().
@@ -29,7 +30,7 @@ class OrganizationController extends FrontEndController
         $this->metaUrl = 'organizations';
 
 
-        $query = Organization::find()->select('fullname, ogrn, type');
+        $query = Organization::find()->select('fullname, ogrn, type, inn');
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 60, 'pageSizeParam' => false, 'validatePage' => false]);
         $organizations = $query->offset($pages->offset)
@@ -38,7 +39,7 @@ class OrganizationController extends FrontEndController
             ->all();
 
         if ($pages->getPage() > $pages->getPageCount() || $pages->getPage() == 0 && Yii::$app->request->get('page') !== null) {
-            return $this->redirect(['organization/list']);
+            return $this->redirect(['organization/index']);
         }
 
         $this->canonical = Url::toRoute('organization/index');
@@ -58,7 +59,10 @@ class OrganizationController extends FrontEndController
         $this->metaUrl = 'inn[inn]';
         $this->metaReplace = ['[inn]' => $inn, '[name]' => $organization->fullname, '[ogrn]' => $organization->ogrn];
         $this->canonical = $organization->getUrl();
-        return $this->render('info', ['organizations' => $organizations]);
+
+        $model = new CommentPhone;
+
+        return $this->render('info', ['organizations' => $organizations, 'model' => $model]);
     }
 
     public function actionOgrnip($ogrnip)
@@ -74,7 +78,8 @@ class OrganizationController extends FrontEndController
         $this->metaUrl = 'ogrnip[number]';
         $this->metaReplace = ['[inn]' => $organization->inn, '[name]' => $organization->fullname, '[ogrn]' => $organization->ogrn];
         $this->canonical = $organization->getUrl();
-        return $this->render('info2', ['organization' => $organization]);
+        $model = new CommentPhone;
+        return $this->render('info2', ['organization' => $organization, 'model' => $model]);
     }
     public function actionOgrn($ogrn)
     {
@@ -89,6 +94,7 @@ class OrganizationController extends FrontEndController
         $this->metaUrl = 'ogrn[number]';
         $this->metaReplace = ['[inn]' => $organization->inn, '[name]' => $organization->fullname, '[ogrn]' => $organization->ogrn];
         $this->canonical = $organization->getUrl();
-        return $this->render('info2', ['organization' => $organization]);
+        $model = new CommentPhone;
+        return $this->render('info2', ['organization' => $organization, 'model' => $model]);
     }
 }

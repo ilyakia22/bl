@@ -7,8 +7,8 @@ class TextLib
 
     public static function ckeDecodeText($text, $forUpdate = false)
     {
-        if ($forUpdate) $text = preg_replace_callback('/\[\[url2?=(.*?)##(.*?)##redirect\]\]/', 'self::ckeDecodeText_RedirectLinkUpdate', $text);
-        else $text = preg_replace_callback('/\[\[url2?=(.*?)##(.*?)##redirect\]\]/', 'self::ckeDecodeText_RedirectLink', $text);
+        if ($forUpdate) $text = preg_replace_callback('/\[\[url2?=(.*?)##(.*?)##redirect\]\]/', 'app\lib\TextLib::ckeDecodeText_RedirectLinkUpdate', $text);
+        else $text = preg_replace_callback('/\[\[url2?=(.*?)##(.*?)##redirect\]\]/', 'app\lib\TextLib::ckeDecodeText_RedirectLink', $text);
         return $text = preg_replace(
             array(
                 '/href=/',

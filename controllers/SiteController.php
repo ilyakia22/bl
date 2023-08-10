@@ -120,7 +120,7 @@ class SiteController extends FrontEndController
 
         $forums = Forum::find()->where('tpl_id=0 AND status=:status', ['status' => Forum::STATUS_APPROVED])->orderBy('datetime_create DESC')->limit(10)->all();
 
-        $organizations = Organization::find()->select('fullname, ogrn, type')->orderBy('id DESC')->limit(10)->all();
+        $organizations = Organization::find()->select('fullname, ogrn, type, inn')->orderBy('id DESC')->limit(12)->all();
 
         // $criteria = new CDbCriteria;
         // $criteria->limit = '30';
