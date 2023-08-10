@@ -73,7 +73,6 @@ $arr = ['kpp', 'date_reg', 'address', 'phone', 'email'];
         'options' => ['class' => 'form-horizontal'],
     ]) ?>
     <?= $form->field($model, 'name', ['options' => ['class' => 'mt-3']]) ?>
-    <?= $form->field($model, 'type', ['options' => ['class' => 'mt-3']])->dropdownList(app\models\CommentPhone::getTypeList()) ?>
     <?= $form->field($model, 'comment', ['options' => ['class' => 'mt-3']])->textarea() ?>
 
     <div class="form-group mt-3">
