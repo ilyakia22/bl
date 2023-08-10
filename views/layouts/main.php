@@ -27,6 +27,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
     <?php $this->head() ?>
     <?= YANDEX_METRIKA ?>
     <?= GOOGLE_ANALYTICS ?>
+    <!-- Yandex.RTB -->
+    <script>
+        window.yaContextCb = window.yaContextCb || []
+    </script>
+    <script src="https://yandex.ru/ads/system/context.js" async></script>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -48,6 +53,17 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
             <?php if (!empty($this->params['breadcrumbs'])) : ?>
                 <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
             <?php endif ?>
+            <!-- Yandex.RTB R-A-2583959-1 -->
+            <div id="yandex_rtb_R-A-2583959-1"></div>
+            <script>
+                window.yaContextCb.push(() => {
+                    Ya.Context.AdvManager.render({
+                        "blockId": "R-A-2583959-1",
+                        "renderTo": "yandex_rtb_R-A-2583959-1",
+                        "type": "feed"
+                    })
+                })
+            </script>
             <?= Alert::widget() ?>
             <? if (isset($this->params['h1'])) : ?>
                 <h1><?= $this->params['h1'] ?></h1>
