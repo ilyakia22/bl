@@ -50,20 +50,23 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
 
     <main id="main" class="flex-shrink-0" role="main">
         <div class="container">
+
             <?php if (!empty($this->params['breadcrumbs'])) : ?>
                 <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
             <?php endif ?>
-            <!-- Yandex.RTB R-A-2583959-1 -->
-            <div id="yandex_rtb_R-A-2583959-1"></div>
-            <script>
-                window.yaContextCb.push(() => {
-                    Ya.Context.AdvManager.render({
-                        "blockId": "R-A-2583959-1",
-                        "renderTo": "yandex_rtb_R-A-2583959-1",
-                        "type": "feed"
+            <div style="display:block; height:120px;">
+                <!-- Yandex.RTB R-A-2583959-1 -->
+                <div id="yandex_rtb_R-A-2583959-1"></div>
+                <script>
+                    window.yaContextCb.push(() => {
+                        Ya.Context.AdvManager.render({
+                            "blockId": "R-A-2583959-1",
+                            "renderTo": "yandex_rtb_R-A-2583959-1",
+                            "type": "feed"
+                        })
                     })
-                })
-            </script>
+                </script>
+            </div>
             <?= Alert::widget() ?>
             <? if (isset($this->params['h1'])) : ?>
                 <h1><?= $this->params['h1'] ?></h1>
