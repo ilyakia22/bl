@@ -55,14 +55,13 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
                 <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
             <?php endif ?>
 
-            <!-- Yandex.RTB R-A-2583959-1 -->
-            <div id="yandex_rtb_R-A-2583959-1"></div>
+            <!-- Yandex.RTB R-A-2583959-2 -->
+            <div id="yandex_rtb_R-A-2583959-2"></div>
             <script>
                 window.yaContextCb.push(() => {
                     Ya.Context.AdvManager.render({
-                        "blockId": "R-A-2583959-1",
-                        "renderTo": "yandex_rtb_R-A-2583959-1",
-                        "type": "feed"
+                        "blockId": "R-A-2583959-2",
+                        "renderTo": "yandex_rtb_R-A-2583959-2"
                     })
                 })
             </script>
