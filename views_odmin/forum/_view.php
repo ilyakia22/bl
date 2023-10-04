@@ -11,10 +11,6 @@
 		<? endif; ?>
 		,
 		AmountComment: <?= $model->amount_comment ?>
-		<? if ($model->amount_comment > 1500) : ?>
-			[<a href="<?= url('forum/removePartComments', ['forum_id' => $model->id]) ?>">удалить чать комментов</a>]
-		<? endif; ?>
-		,
 		<?
 		//$model->secret 
 		?>
@@ -28,6 +24,8 @@
 	<div class="card-body">
 		<div class="row">
 			<div class="col-sm-10">
+				<a href="<?= url(['forum/edit', 'forum_id' => $model->id]) ?>" class="btn btn-sm btn-primary">Edit</a>
+				<hr />
 				<b><?= $model->title ?></b>
 				<?= $model->getFormattedText() ?>
 			</div>

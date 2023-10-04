@@ -49,4 +49,17 @@ class ForumController extends OdminController
         $forum->updateAttributes(['status' => $status]);
         return $this->redirect(['forum/index', 'status' => $goStatus]);
     }
+
+    public function actionEdit($forum_id)
+    {
+        $model = Forum::findOne($forum_id);
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            \Yii::$app->session->setFlash('success', "forum updated");
+            return $this->redirect(['forum/edit', 'forum_id' => $forum_id]);
+        }
+
+        return $this->render('edit', [
+            'model' => $model,
+        ]);
+    }
 }
